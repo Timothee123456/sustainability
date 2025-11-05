@@ -1,49 +1,54 @@
 import * as React from 'react';
 import Rating, { IconContainerProps } from '@mui/material/Rating';
+import ActiveIconBg from './activeIcon';
 import VeryDissatisfied from '@mui/icons-material/SentimentVeryDissatisfiedRounded';
 import Dissatisfied from '@mui/icons-material/SentimentDissatisfiedRounded';
 import Normal from '@mui/icons-material/SentimentSatisfied';
 import Satisfied from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import VerySatisfied from '@mui/icons-material/SentimentVerySatisfiedRounded';
 
-import VeryDissatisfiedSelected from '@mui/icons-material/SentimentVeryDissatisfied';
-import DissatisfiedSelected from '@mui/icons-material/SentimentDissatisfied';
-import NormalSelected from '@mui/icons-material/SentimentSatisfiedRounded';
-import SatisfiedSelected from '@mui/icons-material/SentimentSatisfiedAltRounded';
-import VerySatisfiedSelected from '@mui/icons-material/SentimentVerySatisfied';
-
-
+const activeIconStyle = {
+  color: '#fff',
+  padding: '0px 2px',
+  transform: 'scale(1.2)',
+}
 
 const customIcons: {
   [index: string]: {
     icon: React.ReactElement<unknown>;
+    activeIconBg: React.ReactElement<unknown>;
     activeIcon: React.ReactElement<unknown>;
     label: string;
   };
 } = {
   1: {
-    icon: <VeryDissatisfied sx={{ color: '#f00' }} />,
-    activeIcon: <VeryDissatisfiedSelected sx={{ color: '#f00' }} />,
+    icon: <VeryDissatisfied sx={{ color: '#f00', padding: '0px 2px'}} />,
+    activeIconBg: <ActiveIconBg current_color="#f00" />,
+    activeIcon: <VeryDissatisfied sx={activeIconStyle} />,
     label: 'Very Dissatisfied',
   },
   2: {
-    icon: <Dissatisfied sx={{ color: '#ffa726' }} />,
-    activeIcon: <DissatisfiedSelected sx={{ color: '#ffa726' }} />,
+    icon: <Dissatisfied sx={{ color: '#ffa726', padding: '0px 2px'}} />,
+    activeIconBg: <ActiveIconBg current_color="#ffa726" />,
+    activeIcon: <Dissatisfied sx={activeIconStyle} />,
     label: 'Dissatisfied',
   },
   3: {
-    icon: <Normal sx={{ color: '#ff0' }} />,
-    activeIcon:<NormalSelected sx={{ color: '#ff0' }} />,
+    icon: <Normal sx={{ color: '#ff0', padding: '0px 2px'}} />,
+    activeIconBg: <ActiveIconBg current_color="#ff0" />,
+    activeIcon: <Normal sx={activeIconStyle} />,
     label: 'Neutral',
   },
   4: {
-    icon: <Satisfied sx={{ color: '#73c74a' }} />,
-    activeIcon: <SatisfiedSelected sx={{ color: '#73c74a' }} />,
+    icon: <Satisfied sx={{ color: '#73c74a', padding: '0px 2px'}} />,
+    activeIconBg: <ActiveIconBg current_color="#73c74a" />,
+    activeIcon: <Satisfied sx={activeIconStyle} />,
     label: 'Satisfied',
   },
   5: {
-    icon: <VerySatisfied sx={{ color: '#009933' }} />,
-    activeIcon: <VerySatisfiedSelected sx={{ color: '#009933' }} />,
+    icon: <VerySatisfied sx={{ color: '#009933', padding: '0px 2px'}} />,
+    activeIconBg: <ActiveIconBg current_color="#009933" />,
+    activeIcon: <VerySatisfied sx={activeIconStyle} />,
     label: 'Very Satisfied',
   },
 };
@@ -56,9 +61,19 @@ interface IconContainerProps extends Omit<RatingProps, 'IconContainerComponent'>
 
 function IconContainer(props: IconContainerProps) {
   const { value, hoveredValue, selectedValue, ...other } = props;
-  const showActiveIcon = (hoveredValue !== null && value === hoveredValue) || (selectedValue !== null && value === selectedValue);
-  const iconToShow = showActiveIcon ? customIcons[value].activeIcon : customIcons[value].icon;
-  return <span {...other}>{iconToShow}</span>;
+  const showActiveIcon = (selectedValue !== null && value === selectedValue);
+  const selected = showActiveIcon ? value === selectedValue ? value !== hoveredValue ? true : false : false : false // returns true only if icon is selected but not hovered
+  const defaultIcon = customIcons[value].icon
+  const activeIconBg = customIcons[value].activeIconBg
+  const activeIcon = customIcons[value].activeIcon
+  const transformStyle = {transform: value === selectedValue ? 'scale(1.2)' : 'scale(1)'} // Apply scale only when selected
+
+  return showActiveIcon ? 
+    <div style={{ position: "relative", ...transformStyle}}> {/* Ensure positioning context */}
+      <span {...other}>{activeIconBg}</span>
+      <span style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, /* Make the icon on top of the bg */ }} {...other}>{activeIcon}</span>
+    </div> 
+    : <span {...other}>{defaultIcon}</span>;
 }
 
 export default function RadioGroupRating() {
