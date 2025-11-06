@@ -13,6 +13,10 @@ const activeIconStyle = {
   transform: 'scale(1.2)',
 }
 
+const iconPadding = {
+  padding: '0px 2px',
+}
+
 const customIcons: {
   [index: string]: {
     icon: React.ReactElement<unknown>;
@@ -22,31 +26,31 @@ const customIcons: {
   };
 } = {
   1: {
-    icon: <VeryDissatisfied sx={{ color: '#f00', padding: '0px 2px'}} />,
+    icon: <VeryDissatisfied sx={{ color: '#f00', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#f00" />,
     activeIcon: <VeryDissatisfied sx={activeIconStyle} />,
     label: 'Very Dissatisfied',
   },
   2: {
-    icon: <Dissatisfied sx={{ color: '#ffa726', padding: '0px 2px'}} />,
+    icon: <Dissatisfied sx={{ color: '#ffa726', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#ffa726" />,
     activeIcon: <Dissatisfied sx={activeIconStyle} />,
     label: 'Dissatisfied',
   },
   3: {
-    icon: <Normal sx={{ color: '#ff0', padding: '0px 2px'}} />,
+    icon: <Normal sx={{ color: '#ff0', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#ff0" />,
     activeIcon: <Normal sx={activeIconStyle} />,
     label: 'Neutral',
   },
   4: {
-    icon: <Satisfied sx={{ color: '#73c74a', padding: '0px 2px'}} />,
+    icon: <Satisfied sx={{ color: '#73c74a', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#73c74a" />,
     activeIcon: <Satisfied sx={activeIconStyle} />,
     label: 'Satisfied',
   },
   5: {
-    icon: <VerySatisfied sx={{ color: '#009933', padding: '0px 2px'}} />,
+    icon: <VerySatisfied sx={{ color: '#009933', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#009933" />,
     activeIcon: <VerySatisfied sx={activeIconStyle} />,
     label: 'Very Satisfied',
