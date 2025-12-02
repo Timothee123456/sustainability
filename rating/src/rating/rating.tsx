@@ -7,14 +7,16 @@ import Normal from '@mui/icons-material/SentimentSatisfied';
 import Satisfied from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import VerySatisfied from '@mui/icons-material/SentimentVerySatisfiedRounded';
 
+const padding = '0px 4px';
+
 const activeIconStyle = {
   color: '#fff',
-  padding: '0px 2px',
+  padding: padding,
   transform: 'scale(1.2)',
 }
 
 const iconPadding = {
-  padding: '0px 2px',
+  padding: padding,
 }
 
 const customIcons: {
@@ -27,31 +29,31 @@ const customIcons: {
 } = {
   1: {
     icon: <VeryDissatisfied sx={{ color: '#f00', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#f00" />,
+    activeIconBg: <ActiveIconBg current_color="#f00" padding={padding} />,
     activeIcon: <VeryDissatisfied sx={activeIconStyle} />,
     label: 'Very Dissatisfied',
   },
   2: {
     icon: <Dissatisfied sx={{ color: '#ffa726', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#ffa726" />,
+    activeIconBg: <ActiveIconBg current_color="#ffa726" padding={padding} />,
     activeIcon: <Dissatisfied sx={activeIconStyle} />,
     label: 'Dissatisfied',
   },
   3: {
     icon: <Normal sx={{ color: '#ff0', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#ff0" />,
+    activeIconBg: <ActiveIconBg current_color="#ff0" padding={padding} />,
     activeIcon: <Normal sx={activeIconStyle} />,
     label: 'Neutral',
   },
   4: {
     icon: <Satisfied sx={{ color: '#73c74a', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#73c74a" />,
+    activeIconBg: <ActiveIconBg current_color="#73c74a" padding={padding} />,
     activeIcon: <Satisfied sx={activeIconStyle} />,
     label: 'Satisfied',
   },
   5: {
     icon: <VerySatisfied sx={{ color: '#009933', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#009933" />,
+    activeIconBg: <ActiveIconBg current_color="#009933" padding={padding} />,
     activeIcon: <VerySatisfied sx={activeIconStyle} />,
     label: 'Very Satisfied',
   },
@@ -66,11 +68,10 @@ interface IconContainerProps extends Omit<RatingProps, 'IconContainerComponent'>
 function IconContainer(props: IconContainerProps) {
   const { value, hoveredValue, selectedValue, ...other } = props;
   const showActiveIcon = (selectedValue !== null && value === selectedValue);
-  const selected = showActiveIcon ? value === selectedValue ? value !== hoveredValue ? true : false : false : false // returns true only if icon is selected but not hovered
   const defaultIcon = customIcons[value].icon
   const activeIconBg = customIcons[value].activeIconBg
   const activeIcon = customIcons[value].activeIcon
-  const transformStyle = {transform: value === selectedValue ? 'scale(1.2)' : 'scale(1)'} // Apply scale only when selected
+  const transformStyle = {transform: value === selectedValue ? 'scale(1.4)' : 'scale(1)'} // Apply scale only when selected
 
   return showActiveIcon ? 
     <div style={{ position: "relative", ...transformStyle}}> {/* Ensure positioning context */}
@@ -80,7 +81,7 @@ function IconContainer(props: IconContainerProps) {
     : <span {...other}>{defaultIcon}</span>;
 }
 
-export default function RadioGroupRating() {
+export default function RadioGroupRating({ size = 1 }) {
   const [hovered, setHovered] = React.useState<number | null>(null);
   const [selectedValue, setSelectedValue] = React.useState<number | null>(null);
 
@@ -92,17 +93,24 @@ export default function RadioGroupRating() {
     setHovered(newHover);
   };
 
+  const container_style = {
+    transform: `scale(${size})`
+  }
+  console.log("Rating size:", size);
+
   return (
-    <Rating
-      name="icon-rating"
-      value={selectedValue}
-      onChange={handleChange}
-      onChangeActive={handleHover}
-      getLabelText={(value: number) => customIcons[value].label}
-      IconContainerComponent={(props) => (
-        <IconContainer {...props} hoveredValue={hovered} selectedValue={selectedValue} value={props.value || 0} />
-      )}
-      highlightSelectedOnly
-    />
+    <div style={container_style}>
+      <Rating
+        name="icon-rating"
+        value={selectedValue}
+        onChange={handleChange}
+        onChangeActive={handleHover}
+        getLabelText={(value: number) => customIcons[value].label}
+        IconContainerComponent={(props) => (
+          <IconContainer {...props} hoveredValue={hovered} selectedValue={selectedValue} value={props.value || 0} />
+        )}
+        highlightSelectedOnly
+      />
+    </div>
   );
 }

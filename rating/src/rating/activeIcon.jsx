@@ -1,4 +1,4 @@
-export default function ActiveIconBg({ current_color, scale = 1.2 }) {
+export default function ActiveIconBg({ current_color, scale = 1.2, padding = '0px 2px' }) {
     const svg_styles = {
         WebkitUserSelect: 'none',
         MozUserSelect: 'none',
@@ -14,7 +14,7 @@ export default function ActiveIconBg({ current_color, scale = 1.2 }) {
         transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
         fill: 'currentColor',
         fontSize: '1.5rem',
-        padding: '0px 2px',
+        padding: padding,
         transform: `scale(${scale})`,
         color: current_color,
     };
