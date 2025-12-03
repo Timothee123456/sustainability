@@ -50,3 +50,63 @@ h1 {
   position:relative;
   top:1px;
 }
+
+
+.food-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90vw;
+    margin-top: 20px;
+}
+
+.food-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    -webkit-tap-highlight-color: transparent; /* For iOS Safari */
+}
+
+.food-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.food-image {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+.food-name {
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold; /* Make the food name bold */
+}
+
+.food-type {
+    font-size: 0.8rem; /* Smaller font size for the food type */
+    color: #777; /* Grey color for the food type */
+    text-align: center;
+    margin-top: 5px; /* Add some space between the name and type */
+}
+
+.food-item.green {
+    background-color: #a7d1ab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.food-item.red {
+    background-color: #ffaaaa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
