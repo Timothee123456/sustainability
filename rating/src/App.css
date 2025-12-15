@@ -17,7 +17,8 @@ h1 {
 .container {
   min-width: 70vw;
   max-width: 10vh;
-  max-height: 90vh;
+  max-height: 85vh;
+  overflow: scroll;
   margin: 0 auto;
   padding: 20px;
   background-color: #fafafa;
@@ -27,7 +28,7 @@ h1 {
 }
 
 
-.myButton {
+.submit {
   box-shadow: 2px 2px 0px 0px #3dc21b;
   background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
   background-color:#44c767;
@@ -42,11 +43,11 @@ h1 {
   text-decoration:none;
   text-shadow:0px 1px 0px #2f6627;
 }
-.myButton:hover {
+.submit:hover {
   background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
   background-color:#5cbf2a;
 }
-.myButton:active {
+.submit:active {
   position:relative;
   top:1px;
 }
@@ -72,9 +73,10 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
     -webkit-tap-highlight-color: transparent; /* For iOS Safari */
+    position: relative; /* For positioning the remove button */
 }
 
-.food-item:hover {
+.food-item:hover:not(.darkened) {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -109,4 +111,29 @@ h1 {
 .food-item.red {
     background-color: #ffaaaa;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Add the darkened style */
+.food-item.darkened {
+    opacity: 0.3; /* Reduce opacity */
+    transition: opacity 0.3s ease;
+}
+
+.remove-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 3px;
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: rgba(128, 128, 128, 0.7); /* Grey with transparency */
+    border: none;
+    border-radius: 50%; /* Make it round */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
 }
