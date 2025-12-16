@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 
-export default function Ingredient({ name, type, img_link }) {
+const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
+    useImperativeHandle(ref, () => ({reset: reset}));
     const [color, setColor] = useState(false);
     const [isRemoved, setIsRemoved] = useState(false);
     
@@ -15,6 +16,11 @@ export default function Ingredient({ name, type, img_link }) {
         setIsRemoved(!isRemoved);
         setColor(false); // Reset color when removed
     }
+
+    const reset = () => {
+        setColor(false);
+        setIsRemoved(false);
+    };
 
     const className = `food-item ${color ? color : ''} ${isRemoved ? 'darkened' : ''}`;
     const checkBoxName = isRemoved ? 'check_box_outline_blank' : 'check_box';
@@ -37,4 +43,6 @@ export default function Ingredient({ name, type, img_link }) {
             <span className="food-type">{type}</span>
         </div>
     );
-}
+});
+
+export default Ingredient;

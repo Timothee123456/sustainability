@@ -1,18 +1,12 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
 import Ingredient from './components/ingredient.jsx';
 
-function changeBgColor(){
-  document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
-}
-
-function reset(){
-  changeBgColor();
-}
-
 function App(date = '12-03-2025') {
   const [ingredients, setIngredients] = useState([]);
+  const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
 
   useEffect(() => {
     fetchData();
@@ -54,6 +48,19 @@ function App(date = '12-03-2025') {
       }
   };
 
+  function changeBgColor(){
+    document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
+  }
+
+  const reset = () => {
+    ingredientRefs.current.forEach(ref => {
+      if (ref && ref.reset) { // Check if the ref exists and has a reset function
+        ref.reset();
+      }
+    });
+    changeBgColor();
+  }
+
   return (
     <div className="container">
       <h1>What ingredients did you like today?</h1>
@@ -64,6 +71,7 @@ function App(date = '12-03-2025') {
             name={ingredient.name}
             type={ingredient.type}
             img_link={ingredient.img_link}
+            ref={el => (ingredientRefs.current[index] = el)} // Assign ref to each Ingredient
           />
         ))}
       </div>
