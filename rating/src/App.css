@@ -14,6 +14,11 @@ h1 {
   color: #0f0f0f;
 }
 
+p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
 .container {
   min-width: 70vw;
   max-width: 10vh;
@@ -75,6 +80,10 @@ h1 {
     -webkit-tap-highlight-color: transparent; /* For iOS Safari */
     position: relative; /* For positioning the remove button */
 }
+.food-item.meal-item {
+    margin: 20px;
+    padding: 35px;
+}
 
 .food-item:hover:not(.darkened) {
     transform: translateY(-5px);
@@ -95,12 +104,23 @@ h1 {
     text-align: center;
     font-weight: bold; /* Make the food name bold */
 }
+.food-name.notBold {
+    font-weight: normal; /* Normal weight for non-bold names */
+}
 
 .food-type {
     font-size: 0.8rem; /* Smaller font size for the food type */
     color: #777; /* Grey color for the food type */
     text-align: center;
     margin-top: 5px; /* Add some space between the name and type */
+}
+
+.food-meal {
+    font-size: 1.3rem;
+    color: #333;
+    text-align: center;
+    margin: 5px;
+    font-weight: bold;
 }
 
 .food-item.green {

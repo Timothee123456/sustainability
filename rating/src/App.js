@@ -3,10 +3,17 @@ import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
 import Ingredient from './components/ingredient.jsx';
+import Meal from './components/meal.jsx';
 
 function App(date = '12-03-2025') {
   const [ingredients, setIngredients] = useState([]);
+  const [view, setView] = useState('meal');
+  const [mealType, setmealType] = useState('A'); // 'A' or 'B'
   const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
+
+  function changeBgColor(){
+    document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
+  }
 
   useEffect(() => {
     fetchData();
@@ -48,10 +55,6 @@ function App(date = '12-03-2025') {
       }
   };
 
-  function changeBgColor(){
-    document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
-  }
-
   const reset = () => {
     ingredientRefs.current.forEach(ref => {
       if (ref && ref.reset) { // Check if the ref exists and has a reset function
@@ -59,25 +62,87 @@ function App(date = '12-03-2025') {
       }
     });
     changeBgColor();
+    setView('meal');
   }
 
-  return (
-    <div className="container">
-      <h1>What ingredients did you like today?</h1>
-      <div class="food-grid">
-        {ingredients.map((ingredient, index) => (
-          <Ingredient
-            key={index}
-            name={ingredient.name}
-            type={ingredient.type}
-            img_link={ingredient.img_link}
-            ref={el => (ingredientRefs.current[index] = el)} // Assign ref to each Ingredient
-          />
-        ))}
+  const next = () => {
+    // Logic to go to the next step
+  };
+  
+  const ChooseMeal = () => {
+    return (
+      <div className="container">
+        <h1>What meal did you take today?</h1>
+        <p>Choose which meal you chose today</p>
+        <div className="food-grid">
+          <Meal
+              name={ingredients[0].name}
+              img_link={ingredients[0].img_link}
+              meal={'Meal A'}
+              color={'255, 99, 71'}
+              onClick={() => { setView('ingredients'); setmealType('A'); }}
+            />
+          <Meal
+              name={ingredients[1].name}
+              img_link={ingredients[1].img_link}
+              meal={'Meal B'}
+              color={'100, 149, 237'}
+              onClick={() => { setView('ingredients'); setmealType('B'); }}
+            />
+          {/*<Meal
+              name={'Noodles Hut'}
+              img_link={"https://www.errenskitchen.com/wp-content/uploads/2018/08/quick-and-easy-chinese-noodle-soup1200.jpg"}
+              meal={'Meal C'}
+              color={'60, 179, 113'}
+              onClick={}
+            /> */}
+        </div>
       </div>
-      <a className="submit" onClick={reset}>
-        Submit
-      </a>
+    )
+  };
+  
+  
+  const ChooseIngredients = () => {
+    return (
+      <div className="container">
+        <h1>What did you like today?</h1>
+        <p>First remove what you didn't take, then click <span style={{color:'green'}}>once to like</span> and <span style={{color:'red'}}>twice to dislike</span></p>
+        <div className="food-grid">
+            {ingredients.map((ingredient, index) => {
+            if (mealType === 'A' && ingredient.type === 'Dish B') {
+              return null;
+            }
+            if (mealType === 'B' && ingredient.type === 'Dish A') {
+              return null;
+            }
+            return (
+              <Ingredient
+                key={index}
+                name={ingredient.name}
+                type={ingredient.type}
+                img_link={ingredient.img_link}
+                ref={el => (ingredientRefs.current[index] = el)} // Assign ref to each Ingredient
+              />
+            );
+          })}
+        </div>
+        <a className="submit" onClick={reset}>
+          Submit
+        </a>
+      </div>
+    )
+  };
+
+  if (ingredients.length === 0) {
+    return (
+      <div className="App">
+        Loading...
+      </div>
+    );
+  }
+  return (
+    <div className="App">
+      {view === 'meal' ? <ChooseMeal /> : <ChooseIngredients />}
     </div>
   );
 }
