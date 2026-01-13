@@ -133,6 +133,11 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.food-item.gold {
+    background-color: #fff2b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 /* Add the darkened style */
 .food-item.darkened {
     opacity: 0.3; /* Reduce opacity */

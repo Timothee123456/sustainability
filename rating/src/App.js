@@ -1,4 +1,5 @@
 import './App.css';
+import './components/ratingDiv.css';
 import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
@@ -106,7 +107,7 @@ function App(date = '12-03-2025') {
     return (
       <div className="container">
         <h1>What did you like today?</h1>
-        <p>First remove what you didn't take, then click <span style={{color:'green'}}>once to like</span> and <span style={{color:'red'}}>twice to dislike</span></p>
+        <p>First remove what you didn't take, then rate your food</p>
         <div className="food-grid">
             {ingredients.map((ingredient, index) => {
             if (mealType === 'A' && ingredient.type === 'Dish B') {

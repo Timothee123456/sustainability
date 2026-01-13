@@ -1,0 +1,28 @@
+.rating_icons .green { --base: #99ff99; --active: #00ff00; }
+.rating_icons .red { --base: #ff9999; --active: #ff0000; }
+.rating_icons .gold { --base: #ffe799; --active: #ffc400; }
+
+.rating_icons .green,
+.rating_icons .red,
+.rating_icons .gold {
+  color: var(--base);
+}
+
+.rating_icons .green.selected,
+.rating_icons .red.selected,
+.rating_icons .gold.selected {
+  color: var(--active);
+  transform: scale(1.1);
+}
+
+.rating_icons span{
+    font-size: 40px;
+    margin: 5px 5px 0px 5px;
+}
+
+.rating_icons {
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 0px 5px;
+    border-radius: 50px;
+}
