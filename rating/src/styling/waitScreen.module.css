@@ -1,0 +1,15 @@
+.countdownContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.countdown {
+  font-size: 10rem;
+  width: hieghtWidth;
+  background-color: #000537;
+  color: #fff;
+  border-radius: 100px;
+  text-align: center;
+}

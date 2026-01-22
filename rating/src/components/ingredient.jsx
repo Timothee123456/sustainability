@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import './ratingDiv.css'
+import '../styling/ratingDiv.css'
 
 const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
     useImperativeHandle(ref, () => ({reset: reset}));
