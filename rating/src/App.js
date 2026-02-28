@@ -15,10 +15,22 @@ function App(date = '12-03-2025') {
   const [showNotification, setShowNotification] = useState(false);
   const [hideNotification, setHideNotification] = useState(false);
   const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
+  const baseWidth = 300; // reference width for scaling at which rsize = 1
+  const [rsize, setRsize] = useState(window.innerWidth / baseWidth); // Initialize rsize based on initial width
+
+  useEffect(() => {
+    const ratingSize = () => {
+        setRsize(window.innerWidth / baseWidth);
+    };
+    window.addEventListener('resize', ratingSize);  // this will adjust the rating size based on window resize
+  }, []); // Empty dependency array: run only once on mount
+
 
   function changeBgColor(){
     document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
   }
+
+  
 
   useEffect(() => {
     fetchData();
@@ -98,7 +110,7 @@ function App(date = '12-03-2025') {
       {view === 'screensaver' ? <Screensaver setView={setView}/> 
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setmealType={setmealType} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} />
-          : view === 'chooseIcon' ? <ChooseIcon reset={reset} />
+          : view === 'chooseIcon' ? <ChooseIcon reset={reset} rsize={rsize} />
            : <WaitScreen setView={setView}/>}
     </div>
   );

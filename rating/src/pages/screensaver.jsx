@@ -20,7 +20,7 @@ export default function Screensaver({setView}) {
       <div className="container">
         <div className="screensaver-content">
           <h1>Rate the cantine!</h1>
-          <p>Please select your meal and rate your food!</p>
+          <p>Please select your meal then rate your food!</p>
           <div className="screensaver-box">
             <div className="screensaver-key">
               <span className="material-icons green">thumb_up</span> Liked it

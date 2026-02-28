@@ -4,7 +4,7 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
     return (
       <div className="container">
         <h1>What did you like today?</h1>
-        <p>First remove what you didn't take, then rate your food</p>
+        <p>Rate your food by clicking the icons below</p>
         <div className="food-grid">
             {ingredients.map((ingredient, index) => {
             if (mealType === 'A' && ingredient.type === 'Dish B') {

@@ -99,7 +99,7 @@ export default function RadioGroupRating({ size = 1 }) {
   console.log("Rating size:", size);
 
   return (
-    <div style={container_style}>
+    <div style={{...container_style, margin: size * 15 + 'px'}}>
       <Rating
         name="icon-rating"
         value={selectedValue}

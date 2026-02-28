@@ -4,13 +4,14 @@ import '../styling/ratingDiv.css'
 const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
     useImperativeHandle(ref, () => ({reset: reset}));
     const [color, setColor] = useState(false);
-    const [isRemoved, setIsRemoved] = useState(false);
+    const [isRemoved, setIsRemoved] = useState(true);
     const greenRef = useRef(null);
     const redRef = useRef(null);
     const goldRef = useRef(null);
 
-    function changeRating(new_color) {
-        if (isRemoved) return;
+    function changeRating(e, new_color) {
+        e.stopPropagation();
+        if (isRemoved) setIsRemoved(false);
         resetColor();
 
         if (color !== new_color) {
@@ -25,6 +26,7 @@ const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
         e.stopPropagation(); // Prevent triggering the parent onClick
         setIsRemoved(!isRemoved);
         setColor(false); // Reset color when removed
+        resetColor()
     }
 
     const resetColor = () => {
@@ -66,9 +68,9 @@ const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
             <span className="food-type">{type}</span>
 
             <div className="rating_icons">
-                <span className="material-icons green" onClick={() => changeRating('green')} ref={greenRef}>thumb_up</span>
-                <span className="material-icons red" onClick={() => changeRating('red')} ref={redRef}>thumb_down</span>
-                <span className="material-icons gold" onClick={() => changeRating('gold')} ref={goldRef}>stars</span>
+                <span className="material-icons green" onClick={(e) => changeRating(e, 'green')} ref={greenRef}>thumb_up</span>
+                <span className="material-icons red" onClick={(e) => changeRating(e, 'red')} ref={redRef}>thumb_down</span>
+                <span className="material-icons gold" onClick={(e) => changeRating(e, 'gold')} ref={goldRef}>stars</span>
             </div>
         </div>
     );
