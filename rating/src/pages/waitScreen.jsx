@@ -12,7 +12,7 @@ export default function WaitScreen({setView}) {
 
           return () => clearTimeout(timer); // Cleanup function to clear the timeout
       } else {
-          /*setView('screensaver');*/
+          setView('screensaver');
       }
     }, [count]);
     return (

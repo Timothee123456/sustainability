@@ -1,7 +1,6 @@
 import './App.css';
 import './styling/ratingDiv.css';
-import { useState, useEffect } from 'react';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
 import WaitScreen from './pages/waitScreen.jsx';
 import Screensaver from './pages/screensaver.jsx';
@@ -66,12 +65,12 @@ function App(date = '12-03-2025') {
         ref.reset();
       }
     });
-    changeBgColor();
     setView('waitScreen');
     setShowNotification(true);
     setHideNotification(false);
     setTimeout(() => {
       setHideNotification(true);
+      changeBgColor();
       setTimeout(() => setShowNotification(false), 500); // Wait for slideUp animation to complete
     }, 3000); // Hide notification after 3 seconds
   }

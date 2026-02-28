@@ -1,6 +1,6 @@
-.rating_icons .green { --base: #99ff99; --active: #00ff00; }
-.rating_icons .red { --base: #ff9999; --active: #ff0000; }
-.rating_icons .gold { --base: #ffe799; --active: #ffc400; }
+.rating_icons .green, .screensaver-key .green { --base: #99ff99; --active: #00ff00; }
+.rating_icons .red, .screensaver-key .red { --base: #ff9999; --active: #ff0000; }
+.rating_icons .gold, .screensaver-key .gold { --base: #ffe799; --active: #ffc400; }
 
 .rating_icons .green,
 .rating_icons .red,
@@ -10,7 +10,10 @@
 
 .rating_icons .green.selected,
 .rating_icons .red.selected,
-.rating_icons .gold.selected {
+.rating_icons .gold.selected,
+.screensaver-key .green,
+.screensaver-key .red,
+.screensaver-key .gold {
   color: var(--active);
   transform: scale(1.1);
 }

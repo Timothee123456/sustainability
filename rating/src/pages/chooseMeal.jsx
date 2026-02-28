@@ -20,13 +20,12 @@ export default function ChooseMeal({ingredients, setView, setmealType}) {
               color={'100, 149, 237'}
               onClick={() => { setView('ingredients'); setmealType('B'); }}
             />
-          {/*<Meal
+          <Meal
               name={'Noodles Hut'}
-              img_link={"https://www.errenskitchen.com/wp-content/uploads/2018/08/quick-and-easy-chinese-noodle-soup1200.jpg"}
+              img_link={"./noodles_hut.jpg"}
               meal={'Meal C'}
               color={'60, 179, 113'}
-              onClick={}
-            /> */}
+            />
         </div>
       </div>
     )

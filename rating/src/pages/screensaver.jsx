@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import "../styling/screensaver.css";
 
 export default function Screensaver({setView}) {
     useEffect(() => {
@@ -20,14 +21,16 @@ export default function Screensaver({setView}) {
         <div className="screensaver-content">
           <h1>Rate the cantine!</h1>
           <p>Please select your meal and rate your food!</p>
-          <div className="screensaver-key">
-            <span className="material-icons green">thumb_up</span> Liked it
-          </div>
-          <div className="screensaver-key">
-            <span className="material-icons red">thumb_down</span> Didn't like it
-          </div>
-          <div className="screensaver-key">
-            <span className="material-icons gold">stars</span> Exceptional
+          <div className="screensaver-box">
+            <div className="screensaver-key">
+              <span className="material-icons green">thumb_up</span> Liked it
+            </div>
+            <div className="screensaver-key">
+              <span className="material-icons red">thumb_down</span> Didn't like it
+            </div>
+            <div className="screensaver-key">
+              <span className="material-icons gold">stars</span> Exceptional
+            </div>
           </div>
         </div>
         <button className="screensaver-button">Start</button>

@@ -11,13 +11,58 @@
     z-index: 9999;
 }
 
-.screensaver-content {
-    text-align: center;
-    color: #fff;
-}
-
 .screensaver-animation {
     animation: float 3s ease-in-out infinite;
+}
+
+/* restored and updated styles for box and keys */
+.screensaver-box {
+    display: inline-flex;
+    flex-direction: column; /* stack items vertically */
+    justify-content: center;
+    align-items: center; /* vertically center contents */
+    gap: 0.1rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid #9dff98; /* added border */
+    border-radius: 12px;
+    width: auto;
+}
+
+.screensaver-key {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.screensaver-key:hover {
+    transform: translateY(-2px);
+}
+
+.screensaver-button {
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    background: #1e90ff;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.screensaver-button:hover {
+    background: #1c86ee;
+    transform: scale(1.05);
+}
+
+.screensaver-button:active {
+    transform: scale(0.95);
 }
 
 @keyframes float {
