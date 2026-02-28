@@ -25,6 +25,7 @@ export default function ChooseMeal({ingredients, setView, setmealType}) {
               img_link={"./noodles_hut.jpg"}
               meal={'Meal C'}
               color={'60, 179, 113'}
+              onClick={() => { setView('chooseIcon'); }}
             />
         </div>
       </div>

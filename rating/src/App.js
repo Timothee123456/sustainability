@@ -6,6 +6,7 @@ import WaitScreen from './pages/waitScreen.jsx';
 import Screensaver from './pages/screensaver.jsx';
 import ChooseMeal from './pages/chooseMeal.jsx';
 import ChooseIngredients from './pages/chooseIngredients.jsx';
+import ChooseIcon from './pages/chooseIcon.jsx';
 
 function App(date = '12-03-2025') {
   const [ingredients, setIngredients] = useState([]);
@@ -97,7 +98,8 @@ function App(date = '12-03-2025') {
       {view === 'screensaver' ? <Screensaver setView={setView}/> 
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setmealType={setmealType} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} />
-          : <WaitScreen setView={setView}/>}
+          : view === 'chooseIcon' ? <ChooseIcon reset={reset} />
+           : <WaitScreen setView={setView}/>}
     </div>
   );
 }
