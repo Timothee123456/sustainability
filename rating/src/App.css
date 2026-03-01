@@ -20,6 +20,7 @@ p {
 }
 
 .container {
+  position: relative;
   min-width: 70vw;
   max-width: 10vh;
   max-height: 85vh;
@@ -30,6 +31,30 @@ p {
   text-align: center;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover */
+}
+
+.back-button:hover {
+  background: #1c86ee;
+  transform: scale(1.05);
+}
+
+.back-button:focus {
+   transform: scale(0.95);
 }
 
 

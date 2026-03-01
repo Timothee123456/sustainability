@@ -1,8 +1,9 @@
 import Ingredient from '../components/ingredient.jsx';
 
-export default function ChooseIngredients({ingredients, mealType, ingredientRefs, reset}) {
+export default function ChooseIngredients({ingredients, mealType, ingredientRefs, reset, setView}) {
     return (
       <div className="container">
+        <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('meal');}}>&#8592; Back</button>
         <h1>What did you like today?</h1>
         <p>Rate your food by clicking the icons below</p>
         <div className="food-grid">

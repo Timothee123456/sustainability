@@ -1,6 +1,6 @@
 import './App.css';
 import './styling/ratingDiv.css';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
 import WaitScreen from './pages/waitScreen.jsx';
 import Screensaver from './pages/screensaver.jsx';
@@ -88,10 +88,6 @@ function App(date = '12-03-2025') {
     }, 3000); // Hide notification after 3 seconds
   }
 
-  const next = () => {
-    // Logic to go to the next step
-  };
-
   if (ingredients.length === 0) {
     return (
       <div className="App">
@@ -99,7 +95,7 @@ function App(date = '12-03-2025') {
       </div>
     );
   }
-  console.log(view)
+  console.log('view state:', view);
   return (
     <div className="App">
       {showNotification && (
@@ -109,7 +105,7 @@ function App(date = '12-03-2025') {
       )}
       {view === 'screensaver' ? <Screensaver setView={setView}/> 
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setmealType={setmealType} />
-         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} />
+         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} rsize={rsize} />
            : <WaitScreen setView={setView}/>}
     </div>

@@ -3,6 +3,7 @@ import Meal from '../components/meal.jsx';
 export default function ChooseMeal({ingredients, setView, setmealType}) {
     return (
       <div className="container">
+        <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('screensaver');}}>&#8592; Back</button>
         <h1>Help improve the cantine</h1>
         <p>Choose which meal you chose today</p>
         <div className="food-grid">

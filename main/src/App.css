@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .App-logo {
@@ -36,3 +39,32 @@
     transform: rotate(360deg);
   }
 }
+
+.nothing {
+  font-size: 20px;
+  color: #555;
+  margin-top: 20px;
+}
+
+.title-container {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.month-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.change-month-arrow {
+  font-size: 2.5rem;
+  color: #000ed3;
+  font-weight: 1000;
+}
+
+.change-month-arrow.disabled {
+  color: hsl(236, 15%, 41%);
+}
+
