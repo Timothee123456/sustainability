@@ -1,6 +1,6 @@
 import Meal from '../components/meal.jsx';
 
-export default function ChooseMeal({ingredients, setView, setmealType}) {
+export default function ChooseMeal({ingredients, setView, setMealType, mode}) {
     return (
       <div className="container">
         <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('screensaver');}}>&#8592; Back</button>
@@ -12,14 +12,28 @@ export default function ChooseMeal({ingredients, setView, setmealType}) {
               img_link={ingredients[0].img_link}
               meal={'Meal A'}
               color={'255, 99, 71'}
-              onClick={() => { setView('ingredients'); setmealType('A'); }}
+              onClick={() => {
+                if (mode === 1) {
+                  setView('ingredients');
+                  setMealType('A');
+                } else {
+                  setView('chooseIcon');
+                }
+              }}
             />
           <Meal
               name={ingredients[1].name}
               img_link={ingredients[1].img_link}
               meal={'Meal B'}
               color={'100, 149, 237'}
-              onClick={() => { setView('ingredients'); setmealType('B'); }}
+              onClick={() => {
+                if (mode === 1) {
+                  setView('ingredients');
+                  setMealType('B');
+                } else {
+                  setView('chooseIcon');
+                }
+              }}
             />
           <Meal
               name={'Noodles Hut'}

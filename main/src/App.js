@@ -16,9 +16,13 @@ const formatMonthYear = (date) => {
 };
 
 function App() {
-  const [currentMonthIndex, setCurrentMonthIndex] = useState(0);
-  const [direction, setDirection] = useState('right'); // Track animation direction
+  // [index, direction] -> direction is 1 (right) or -1 (left)
+  const [[page, direction], setPage] = useState([0, 0]);
 
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
+  
   // Extract unique months from data, sorted chronologically
   const months = useMemo(() => {
     const monthSet = new Set();

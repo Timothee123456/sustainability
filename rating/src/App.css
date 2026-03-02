@@ -215,7 +215,6 @@ p {
     top: 0;
     left: 0;
     right: 0;
-    background-color: #44c767;
     color: white;
     padding: 20px;
     text-align: center;
@@ -228,4 +227,12 @@ p {
 
 .notification.hide {
     animation: slideUp 0.5s ease-in-out;
+}
+
+.notification.success {
+    background-color: #44c767;
+}
+
+.notification.error {
+    background-color: #ff4444;
 }

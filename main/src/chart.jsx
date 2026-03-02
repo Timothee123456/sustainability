@@ -170,7 +170,7 @@ const StackedBarChart = ({ data }) => {
 
   return (
     <>
-      <svg ref={svgRef} style={{position: "absolute", left: "50%", transform: "translateX(-50%)"}}></svg>
+      <svg ref={svgRef} style={{ position: "absolute", left: "50%", transform: "translateX(-50%)"}}></svg>
       {tooltipData && (
         <div
           ref={tooltipRef}

@@ -9,9 +9,17 @@ import ChooseIngredients from './pages/chooseIngredients.jsx';
 import ChooseIcon from './pages/chooseIcon.jsx';
 
 function App(date = '12-03-2025') {
+
+
+  const mode = 0;
+
+
+
+
+
   const [ingredients, setIngredients] = useState([]);
   const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
-  const [mealType, setmealType] = useState('A'); // 'A' or 'B'
+  const [mealType, setMealType] = useState('A'); // 'A' or 'B'
   const [showNotification, setShowNotification] = useState(false);
   const [hideNotification, setHideNotification] = useState(false);
   const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
@@ -95,18 +103,18 @@ function App(date = '12-03-2025') {
       </div>
     );
   }
-  console.log('view state:', view);
+
   return (
     <div className="App">
       {showNotification && (
-        <div className={`notification ${hideNotification ? 'hide' : ''}`}>
+        <div className={`notification success ${hideNotification ? 'hide' : ''}`}>
           Your response was recorded
         </div>
       )}
       {view === 'screensaver' ? <Screensaver setView={setView}/> 
-        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setmealType={setmealType} />
+        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} mode={mode}/>
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} />
-          : view === 'chooseIcon' ? <ChooseIcon reset={reset} rsize={rsize} />
+          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} />
            : <WaitScreen setView={setView}/>}
     </div>
   );

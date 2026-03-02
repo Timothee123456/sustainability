@@ -81,12 +81,13 @@ function IconContainer(props: IconContainerProps) {
     : <span {...other}>{defaultIcon}</span>;
 }
 
-export default function RadioGroupRating({ size = 1 }) {
+export default function RadioGroupRating({ size = 1, onChange }) {
   const [hovered, setHovered] = React.useState<number | null>(null);
   const [selectedValue, setSelectedValue] = React.useState<number | null>(null);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
     setSelectedValue(newValue);
+    onChange(newValue);
   };
 
   const handleHover = (event: React.ChangeEvent<{}>, newHover: number | null) => {
@@ -96,7 +97,6 @@ export default function RadioGroupRating({ size = 1 }) {
   const container_style = {
     transform: `scale(${size})`
   }
-  console.log("Rating size:", size);
 
   return (
     <div style={{...container_style, margin: size * 15 + 'px'}}>
