@@ -16,12 +16,8 @@ const formatMonthYear = (date) => {
 };
 
 function App() {
-  // [index, direction] -> direction is 1 (right) or -1 (left)
-  const [[page, direction], setPage] = useState([0, 0]);
-
-  const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
-  };
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(0);
+  const [direction, setDirection] = useState('right');
   
   // Extract unique months from data, sorted chronologically
   const months = useMemo(() => {
@@ -97,7 +93,7 @@ function App() {
           key={currentMonthIndex}
           initial={{ x: direction === 'right' ? 1000 : -1000, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: direction === 'right' ? -1000 : 1000, opacity: 0 }}
+          exit={{ x: currentMonthIndex === 0 ? -1000 : currentMonthIndex === months.length - 1 ? 1000 : direction === 'right' ? -1000 : 1000, opacity: 0 }}
           transition={{ duration: 1 }}
           style={{ width: '100%' }}
         >

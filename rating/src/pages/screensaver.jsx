@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import "../styling/screensaver.css";
 
-export default function Screensaver({setView}) {
+export default function Screensaver({ setView, mode }) {
     useEffect(() => {
         const handleClick = () => {
             setView('meal');
@@ -21,6 +21,7 @@ export default function Screensaver({setView}) {
         <div className="screensaver-content">
           <h1>Rate the cantine!</h1>
           <p>Please select your meal then rate your food!</p>
+          { mode === 1 ? 
           <div className="screensaver-box">
             <div className="screensaver-key">
               <span className="material-icons green">thumb_up</span> Liked it
@@ -31,7 +32,7 @@ export default function Screensaver({setView}) {
             <div className="screensaver-key">
               <span className="material-icons gold">stars</span> Exceptional
             </div>
-          </div>
+          </div> : ''}
         </div>
         <button className="screensaver-button">Start</button>
         <p className="screensaver-instruction">Click anywhere to begin</p>

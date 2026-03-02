@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Rating, { IconContainerProps } from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 import ActiveIconBg from './activeIcon';
 import VeryDissatisfied from '@mui/icons-material/SentimentVeryDissatisfiedRounded';
 import Dissatisfied from '@mui/icons-material/SentimentDissatisfiedRounded';
@@ -31,31 +32,31 @@ const customIcons: {
     icon: <VeryDissatisfied sx={{ color: '#f00', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#f00" padding={padding} />,
     activeIcon: <VeryDissatisfied sx={activeIconStyle} />,
-    label: 'Very Dissatisfied',
+    label: 'Awful',
   },
   2: {
     icon: <Dissatisfied sx={{ color: '#ffa726', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#ffa726" padding={padding} />,
     activeIcon: <Dissatisfied sx={activeIconStyle} />,
-    label: 'Dissatisfied',
+    label: 'Bad',
   },
   3: {
     icon: <Normal sx={{ color: '#ff0', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#ff0" padding={padding} />,
     activeIcon: <Normal sx={activeIconStyle} />,
-    label: 'Neutral',
+    label: 'Average',
   },
   4: {
     icon: <Satisfied sx={{ color: '#73c74a', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#73c74a" padding={padding} />,
     activeIcon: <Satisfied sx={activeIconStyle} />,
-    label: 'Satisfied',
+    label: 'Good',
   },
   5: {
     icon: <VerySatisfied sx={{ color: '#009933', ...iconPadding}} />,
     activeIconBg: <ActiveIconBg current_color="#009933" padding={padding} />,
     activeIcon: <VerySatisfied sx={activeIconStyle} />,
-    label: 'Very Satisfied',
+    label: 'Excellent',
   },
 };
 
@@ -71,14 +72,45 @@ function IconContainer(props: IconContainerProps) {
   const defaultIcon = customIcons[value].icon
   const activeIconBg = customIcons[value].activeIconBg
   const activeIcon = customIcons[value].activeIcon
+  const label = customIcons[value].label
   const transformStyle = {transform: value === selectedValue ? 'scale(1.4)' : 'scale(1)'} // Apply scale only when selected
+  const iconColor = customIcons[value].icon.props.sx.color;
 
-  return showActiveIcon ? 
-    <div style={{ position: "relative", ...transformStyle}}> {/* Ensure positioning context */}
-      <span {...other}>{activeIconBg}</span>
-      <span style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, /* Make the icon on top of the bg */ }} {...other}>{activeIcon}</span>
+  const iconElement = showActiveIcon ? 
+    <div style={{ position: "relative", display: 'inline-block'}}>
+      <span>{activeIconBg}</span>
+      <span style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, /* Make the icon on top of the bg */ }}>{activeIcon}</span>
     </div> 
-    : <span {...other}>{defaultIcon}</span>;
+    : <span>{defaultIcon}</span>;
+
+  return (
+    <div
+      {...other} 
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        ...transformStyle,
+      }}
+    >
+      {/*<Typography
+        variant="caption"
+        sx={{
+          fontSize: '0.4rem',
+          fontWeight: 500,
+          lineHeight: 0.8,
+          mb: 0.5,
+          color: iconColor,
+          textTransform: 'uppercase', 
+          letterSpacing: '0.02em',
+          opacity: value === selectedValue ? 1 : 0.8, 
+        }}
+      >
+        {label}
+      </Typography>*/}
+      {iconElement}
+    </div>
+  );
 }
 
 export default function RadioGroupRating({ size = 1, onChange }) {

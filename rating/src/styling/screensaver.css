@@ -27,6 +27,7 @@
     border: 2px solid #9dff98; /* added border */
     border-radius: 12px;
     width: auto;
+    margin-bottom: 2rem;
 }
 
 .screensaver-key {
@@ -44,7 +45,6 @@
 }
 
 .screensaver-button {
-    margin-top: 2rem;
     padding: 0.8rem 2rem;
     background: #1e90ff;
     color: #fff;

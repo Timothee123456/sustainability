@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
 const StackedBarChart = ({ data }) => {
+  const colors = ['#ff0000', '#ffa726', '#ffff00', '#73c74a', '#009933']; // Red, Orange, Yellow, Green, Dark Green
   const svgRef = useRef();
   const tooltipRef = useRef();
   const [tooltipData, setTooltipData] = useState(null);
@@ -25,13 +26,15 @@ const StackedBarChart = ({ data }) => {
     const parseDate = d3.timeParse("%m/%d/%Y");
     const preparedData = data.map(d => ({
       date: parseDate(d.date),
-      red: +d.nb_of_red,      // Didn't like it
-      green: +d.nb_of_green,  // Liked it
-      yellow: +d.nb_of_yellow, // Exceptional
+      awful: +d.awful,  // awful  
+      bad: +d.bad,  // bad
+      average: +d.average, // Average
+      good: +d.good,  // good
+      excellent: +d.excellent // excellent
     })).sort((a, b) => a.date - b.date);
 
     // Keys in stacking order (bottom to top)
-    const keys = ['red', 'green', 'yellow'];
+    const keys = ['awful', 'bad', 'average', 'good', 'excellent'];
 
     // Create stack generator
     const stack = d3.stack()
@@ -53,10 +56,7 @@ const StackedBarChart = ({ data }) => {
     // Flashy colors
     const color = d3.scaleOrdinal()
       .domain(keys)
-      .range(['#ff4d4d',   // bright red for "Didn't like it"
-              '#00cc66',   // bright green for "Liked it"
-              '#ffcc00']); // bright yellow for "Exceptional"
-
+      .range(colors);
     // --- SVG container ---
     const svg = d3.select(svgRef.current)
       .attr("width", width)
@@ -98,9 +98,11 @@ const StackedBarChart = ({ data }) => {
       .on("mouseenter", (event, d) => {
         setTooltipData({
           date: d.data.date,
-          red: d.data.red,
-          green: d.data.green,
-          yellow: d.data.yellow
+          awful: d.data.awful,
+          bad: d.data.bad,
+          average: d.data.average,
+          good: d.data.good,
+          excellent: d.data.excellent
         });
         setTooltipPos({ x: event.pageX, y: event.pageY });
       })
@@ -138,13 +140,20 @@ const StackedBarChart = ({ data }) => {
       .style("font-size", "11px");
 
     // --- Legend with descriptive labels ---
+    const legendItemWidth = 100;                       // spacing per item
+    const legendTotalWidth = keys.length * legendItemWidth;
+    const plotCenterX = marginLeft + (width - marginLeft - marginRight) / 2;
+    const legendX = plotCenterX - legendTotalWidth / 2;
+
     const legend = svg.append("g")
-      .attr("transform", `translate(${marginLeft}, ${marginTop - 25})`);
+      .attr("transform", `translate(${legendX}, ${marginTop - 25})`);
 
     const legendLabels = {
-      red: "Didn't like it",
-      green: "Liked it",
-      yellow: "Exceptional"
+      awful: "Awful",
+      bad: "Bad",
+      average: "Average",
+      good: "Good",
+      excellent: "Excellent"
     };
 
     keys.forEach((key, i) => {
@@ -192,9 +201,11 @@ const StackedBarChart = ({ data }) => {
           }}
         >
           <div><strong>{d3.timeFormat("%A %d, %B")(tooltipData.date)}</strong></div>
-          <div style={{ color: "#ff4d4d" }}>🔴 Didn't like it: {tooltipData.red}</div>
-          <div style={{ color: "#00cc66" }}>🟢 Liked it: {tooltipData.green}</div>
-          <div style={{ color: "#ffcc00" }}>🟡 Exceptional: {tooltipData.yellow}</div>
+          <div style={{ color: colors[0] }}>🔴 Awful: {tooltipData.awful}</div>
+          <div style={{ color: colors[1] }}>🟠 Bad: {tooltipData.bad}</div>
+          <div style={{ color: colors[2] }}>🟡 Average: {tooltipData.average}</div>
+          <div style={{ color: colors[3] }}>🟢 Good: {tooltipData.good}</div>
+          <div style={{ color: colors[4] }}>🟢 Excellent: {tooltipData.excellent}</div>
         </div>
       )}
     </>

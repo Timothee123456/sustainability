@@ -111,7 +111,7 @@ function App(date = '12-03-2025') {
           Your response was recorded
         </div>
       )}
-      {view === 'screensaver' ? <Screensaver setView={setView}/> 
+      {view === 'screensaver' ? <Screensaver setView={setView} mode={mode}/> 
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} mode={mode}/>
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} />
