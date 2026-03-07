@@ -1,8 +1,21 @@
 import { useState, useEffect } from 'react';
 import style from'../styling/waitScreen.module.css';
 
-export default function WaitScreen({setView}) {
+export default function WaitScreen({setView, selectedIngredients, iconValue}) {
     const [count, setCount] = useState(3);
+
+    useEffect(() => {
+      const sendData = async () => {
+        const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue
+        try {
+          alert(data)
+        } catch (error) {
+          console.error('Error sending data:', error);
+        }
+      };
+
+      sendData(); // Call the sendData function when the component mounts
+    }, []);
 
     useEffect(() => {
       if (count > 0) {

@@ -9,14 +9,6 @@ import ChooseIngredients from './pages/chooseIngredients.jsx';
 import ChooseIcon from './pages/chooseIcon.jsx';
 
 function App(date = '12-03-2025') {
-
-
-  const mode = 0;
-
-
-
-
-
   const [ingredients, setIngredients] = useState([]);
   const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
   const [mealType, setMealType] = useState('A'); // 'A' or 'B'
@@ -25,6 +17,9 @@ function App(date = '12-03-2025') {
   const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
   const baseWidth = 300; // reference width for scaling at which rsize = 1
   const [rsize, setRsize] = useState(window.innerWidth / baseWidth); // Initialize rsize based on initial width
+
+  const [selectedIngredients, setSelectedIngredients] = useState({});
+  const [iconValue, setIconValue] = useState(null);
 
   useEffect(() => {
     const ratingSize = () => {
@@ -111,11 +106,11 @@ function App(date = '12-03-2025') {
           Your response was recorded
         </div>
       )}
-      {view === 'screensaver' ? <Screensaver setView={setView} mode={mode}/> 
-        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} mode={mode}/>
-         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} />
-          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} />
-           : <WaitScreen setView={setView}/>}
+      {view === 'screensaver' ? <Screensaver setView={setView} /> 
+        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} />
+         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
+          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
+           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue}/>}
     </div>
   );
 }

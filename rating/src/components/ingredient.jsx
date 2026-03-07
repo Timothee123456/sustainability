@@ -1,13 +1,16 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../styling/ratingDiv.css'
 
-const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
-    useImperativeHandle(ref, () => ({reset: reset}));
-    const [color, setColor] = useState(false);
+const Ingredient = ({ name, type, img_link, onChange }) => {
+    const [color, setColor] = useState(null);
     const [isRemoved, setIsRemoved] = useState(true);
     const greenRef = useRef(null);
     const redRef = useRef(null);
     const goldRef = useRef(null);
+
+    useEffect(() => {
+        onChange(name, color, isRemoved);
+    }, [isRemoved]);
 
     function changeRating(e, new_color) {
         e.stopPropagation();
@@ -19,6 +22,9 @@ const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
             // Add .selected to the clicked span
             const refMap = { green: greenRef, red: redRef, gold: goldRef };
             refMap[new_color].current?.classList.add('selected');
+            onChange(name, new_color, isRemoved); // Notify parent of color change
+        } else {
+            onChange(name, null, isRemoved); // Notify parent of color change
         }
     }
 
@@ -74,6 +80,6 @@ const Ingredient = forwardRef(({ name, type, img_link }, ref) => {
             </div>
         </div>
     );
-});
+};
 
 export default Ingredient;

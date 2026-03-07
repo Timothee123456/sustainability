@@ -1,61 +1,78 @@
 import * as React from 'react';
 import Rating, { IconContainerProps } from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
-import ActiveIconBg from './activeIcon';
-import VeryDissatisfied from '@mui/icons-material/SentimentVeryDissatisfiedRounded';
-import Dissatisfied from '@mui/icons-material/SentimentDissatisfiedRounded';
-import Normal from '@mui/icons-material/SentimentSatisfied';
-import Satisfied from '@mui/icons-material/SentimentSatisfiedAltOutlined';
-import VerySatisfied from '@mui/icons-material/SentimentVerySatisfiedRounded';
+import ConvertToActiveIcon from '../satisfaction-icons/active.jsx';
+import { SvgIcon } from '@mui/material';
+
+import { ReactComponent as VeryDissatisfiedIcon } from '../satisfaction-icons/very-dissatisfied.svg';
+import { ReactComponent as DissatisfiedIcon } from '../satisfaction-icons/dissatisfied.svg';
+import { ReactComponent as NormalIcon } from '../satisfaction-icons/normal.svg';
+import { ReactComponent as SatisfiedIcon } from '../satisfaction-icons/satisfied.svg';
+import { ReactComponent as VerySatisfiedIcon } from '../satisfaction-icons/very-satisfied.svg';
 
 const padding = '0px 4px';
 
 const activeIconStyle = {
-  color: '#fff',
   padding: padding,
   transform: 'scale(1.2)',
+
+  WebkitUserSelect: 'none',
+  MozUserSelect: 'none',
+  MsUserSelect: 'none',
+  userSelect: 'none',
+  width: '1em',
+  height: '1em',
+  display: 'inline-block',
+  WebkitFlexShrink: 0,
+  MsFlexNegative: 0,
+  flexShrink: 0,
+  WebkitTransition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+  fontSize: '1.5rem',
 }
 
 const iconPadding = {
   padding: padding,
 }
 
+const iconColors = {
+  VeryDissatisfied: '#f00',
+  Dissatisfied: '#ffa726',
+  Normal: '#ff0',
+  Satisfied: '#73c74a',
+  VerySatisfied: '#009933',
+}
+
 const customIcons: {
   [index: string]: {
     icon: React.ReactElement<unknown>;
-    activeIconBg: React.ReactElement<unknown>;
     activeIcon: React.ReactElement<unknown>;
     label: string;
   };
 } = {
   1: {
-    icon: <VeryDissatisfied sx={{ color: '#f00', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#f00" padding={padding} />,
-    activeIcon: <VeryDissatisfied sx={activeIconStyle} />,
+    icon: <SvgIcon component={VeryDissatisfiedIcon} inheritViewBox sx={{ color: iconColors.VeryDissatisfied, ...iconPadding }} />,
+    activeIcon: <ConvertToActiveIcon icon={<VeryDissatisfiedIcon />} style={{color: iconColors.VeryDissatisfied, ...activeIconStyle}} />,
     label: 'Awful',
   },
   2: {
-    icon: <Dissatisfied sx={{ color: '#ffa726', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#ffa726" padding={padding} />,
-    activeIcon: <Dissatisfied sx={activeIconStyle} />,
+    icon: <SvgIcon component={DissatisfiedIcon} inheritViewBox sx={{ color: iconColors.Dissatisfied, ...iconPadding }} />,
+    activeIcon: <ConvertToActiveIcon icon={<DissatisfiedIcon />} style={{color: iconColors.Dissatisfied, ...activeIconStyle}} />,
     label: 'Bad',
   },
   3: {
-    icon: <Normal sx={{ color: '#ff0', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#ff0" padding={padding} />,
-    activeIcon: <Normal sx={activeIconStyle} />,
+    icon: <SvgIcon component={NormalIcon} inheritViewBox sx={{ color: iconColors.Normal, ...iconPadding }} />,
+    activeIcon: <ConvertToActiveIcon icon={<NormalIcon />} style={{color: iconColors.Normal, ...activeIconStyle}} />,
     label: 'Average',
   },
   4: {
-    icon: <Satisfied sx={{ color: '#73c74a', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#73c74a" padding={padding} />,
-    activeIcon: <Satisfied sx={activeIconStyle} />,
+    icon: <SvgIcon component={SatisfiedIcon} inheritViewBox sx={{ color: iconColors.Satisfied, ...iconPadding }} />,
+    activeIcon: <ConvertToActiveIcon icon={<SatisfiedIcon />} style={{color: iconColors.Satisfied, ...activeIconStyle}} />,
     label: 'Good',
   },
   5: {
-    icon: <VerySatisfied sx={{ color: '#009933', ...iconPadding}} />,
-    activeIconBg: <ActiveIconBg current_color="#009933" padding={padding} />,
-    activeIcon: <VerySatisfied sx={activeIconStyle} />,
+    icon: <SvgIcon component={VerySatisfiedIcon} inheritViewBox sx={{ color: iconColors.VerySatisfied, ...iconPadding }} />,
+    activeIcon: <ConvertToActiveIcon icon={<VerySatisfiedIcon />} style={{color: iconColors.VerySatisfied, ...activeIconStyle}} />,
     label: 'Excellent',
   },
 };
@@ -70,7 +87,6 @@ function IconContainer(props: IconContainerProps) {
   const { value, hoveredValue, selectedValue, ...other } = props;
   const showActiveIcon = (selectedValue !== null && value === selectedValue);
   const defaultIcon = customIcons[value].icon
-  const activeIconBg = customIcons[value].activeIconBg
   const activeIcon = customIcons[value].activeIcon
   const label = customIcons[value].label
   const transformStyle = {transform: value === selectedValue ? 'scale(1.4)' : 'scale(1)'} // Apply scale only when selected
@@ -78,8 +94,7 @@ function IconContainer(props: IconContainerProps) {
 
   const iconElement = showActiveIcon ? 
     <div style={{ position: "relative", display: 'inline-block'}}>
-      <span>{activeIconBg}</span>
-      <span style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, /* Make the icon on top of the bg */ }}>{activeIcon}</span>
+      <span>{activeIcon}</span>
     </div> 
     : <span>{defaultIcon}</span>;
 
@@ -127,7 +142,7 @@ export default function RadioGroupRating({ size = 1, onChange }) {
   };
 
   const container_style = {
-    transform: `scale(${size})`
+    transform: `scale(${size * 1.3})`
   }
 
   return (

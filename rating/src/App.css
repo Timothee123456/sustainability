@@ -1,3 +1,7 @@
+html {
+  font-size: 100%; /* This makes 1rem bigger */
+}
+
 body {
   background-color: #f0f0f0;
   align-items: center;
@@ -22,7 +26,6 @@ p {
 .container {
   position: relative;
   min-width: 70vw;
-  max-width: 10vh;
   max-height: 85vh;
   overflow: scroll;
   margin: 0 auto;
@@ -57,7 +60,29 @@ p {
    transform: scale(0.95);
 }
 
+.submit {
+    margin-top: 20px;
+    padding: 0.8rem 1.7rem;
+    background: #3dc21b;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.7rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.2s;
+}
 
+.screensaver-button:hover {
+    background: #37b319;
+    transform: scale(1.05);
+}
+
+.screensaver-button:active {
+    transform: scale(0.95);
+}
+
+/* Old submit style, kept for reference
 .submit {
   box-shadow: 2px 2px 0px 0px #3dc21b;
   background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
@@ -82,6 +107,7 @@ p {
   position:relative;
   top:1px;
 }
+*/
 
 
 .food-grid {
