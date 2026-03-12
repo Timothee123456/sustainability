@@ -142,6 +142,12 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.food-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .food-image {
     width: 140px;
     height: 140px;

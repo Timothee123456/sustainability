@@ -1,13 +1,14 @@
 import Meal from '../components/meal.jsx';
 
-export default function ChooseMeal({ingredients, setView, setMealType}) {
+export default function ChooseMeal({ingredients, setView, setMealType, allowedMeals}) {
     return (
       <div className="container">
         <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('screensaver');}}>&#8592; Back</button>
         <h1>Help improve the cantine</h1>
         <p>Choose which meal you chose today</p>
         <div className="food-grid">
-          <Meal
+          {allowedMeals.includes('A') && (
+            <Meal
               name={ingredients[0].name}
               img_link={ingredients[0].img_link}
               meal={'Meal A'}
@@ -17,7 +18,9 @@ export default function ChooseMeal({ingredients, setView, setMealType}) {
                   setMealType('A');
               }}
             />
-          <Meal
+          )}
+          {allowedMeals.includes('B') && (
+            <Meal
               name={ingredients[1].name}
               img_link={ingredients[1].img_link}
               meal={'Meal B'}
@@ -27,16 +30,31 @@ export default function ChooseMeal({ingredients, setView, setMealType}) {
                   setMealType('B');
               }}
             />
-          <Meal
+          )}
+          {allowedMeals.includes('AB') && (
+            <Meal
+              name={ingredients[0].name + ' + ' + ingredients[1].name}
+              img_link={[ingredients[0].img_link, ingredients[1].img_link]}
+              meal={'Meal A + B'}
+              color={'178, 124, 154'}
+              onClick={() => {
+                  setView('ingredients');
+                  setMealType('AB');
+              }}
+            />
+          )}
+          {allowedMeals.includes('C') && (
+            <Meal
               name={'Noodles Hut'}
               img_link={"./noodles_hut.jpg"}
               meal={'Meal C'}
               color={'60, 179, 113'}
-              onClick={() => { 
+              onClick={() => {
                   setView('chooseIcon');
               }}
             />
+          )}
         </div>
       </div>
     )
-  };
+};

@@ -7,8 +7,9 @@ import Screensaver from './pages/screensaver.jsx';
 import ChooseMeal from './pages/chooseMeal.jsx';
 import ChooseIngredients from './pages/chooseIngredients.jsx';
 import ChooseIcon from './pages/chooseIcon.jsx';
-
+/*
 function App(date = '12-03-2025') {
+  const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
   const [ingredients, setIngredients] = useState([]);
   const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
   const [mealType, setMealType] = useState('A'); // 'A' or 'B'
@@ -26,6 +27,19 @@ function App(date = '12-03-2025') {
         setRsize(window.innerWidth / baseWidth);
     };
     window.addEventListener('resize', ratingSize);  // this will adjust the rating size based on window resize
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userParameter = urlParams.get('user'); // Get the 'mode' parameter from the URL
+
+    if (userParameter) {
+      if (userParameter == "secondary"){
+        setAllowedMeals(["A", "B", "C"]);
+      } else if (userParameter == "teachers"){
+        setAllowedMeals(["AB", "C"]);
+      } else if (userParameter == "primary"){
+        setAllowedMeals(["A"]);
+      }
+    }
   }, []); // Empty dependency array: run only once on mount
 
 
@@ -107,10 +121,34 @@ function App(date = '12-03-2025') {
         </div>
       )}
       {view === 'screensaver' ? <Screensaver setView={setView} /> 
-        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} />
+        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
            : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue}/>}
+    </div>
+  );
+}*/
+
+
+function App() {
+  const [message, setMessage] = useState("Loading...");
+
+  useEffect(() => {
+    // If you set the "proxy" in package.json, use "/index"
+    // Otherwise, use the full URL: "http://127.0.0.1"
+    fetch("/index")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.text(); // Use .json() if your Flask returns jsonify()
+      })
+      .then((data) => setMessage(data))
+      .catch((err) => console.error("Fetch error:", err));
+  }, []);
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Flask + React Connection</h1>
+      <p>Message from Backend: <strong>{message}</strong></p>
     </div>
   );
 }
