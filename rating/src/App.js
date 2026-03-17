@@ -7,7 +7,48 @@ import Screensaver from './pages/screensaver.jsx';
 import ChooseMeal from './pages/chooseMeal.jsx';
 import ChooseIngredients from './pages/chooseIngredients.jsx';
 import ChooseIcon from './pages/chooseIcon.jsx';
-/*
+
+function fetchData(date) {
+  /*fetch(`/api/date/12-03-2025`)
+    .then((res) => {
+      if (!res.ok) alert("Network response was not ok");
+      return res.json();
+    })
+    .then((data) => response = data)
+    .catch((err) => alert("Fetch error:" + err));*/
+    
+          const response = [
+            {
+              'name': 'Pork',
+              'type': 'Dish A',
+              'img_link': 'https://www.lovefoodhatewaste.com/sites/default/files/styles/16_9_two_column/public/2022-08/Pork-sh1419942758.jpg.webp?itok=_Ow0IXe6'
+            },
+            {
+              'name': 'Eggplant',
+              'type': 'Dish B',
+              'img_link': 'https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/eggplant.jpg.webp?itok=k6_74IzB'
+            },
+            {
+              'name': 'Cabbage',
+              'type': 'Vegetables',
+              'img_link': 'https://greengarden.ph/cdn/shop/products/LINE_ALBUM_PICTURE_230412_85.jpg?v=1681290016'
+            },
+            {
+              'name': 'Rice',
+              'type': 'Starch',
+              'img_link': 'https://healthynibblesandbits.com/wp-content/uploads/2018/10/Jasmine-Rice-FF.jpg'
+            },
+            {
+              'name': 'Sponge cake',
+              'type': 'Dessert',
+              'img_link': 'https://www.laserbiscuit.com/wp-content/uploads/2021/03/sponge-cake-stuck.jpg'
+            }
+          ];
+    return response
+}
+
+
+
 function App(date = '12-03-2025') {
   const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
   const [ingredients, setIngredients] = useState([]);
@@ -47,47 +88,11 @@ function App(date = '12-03-2025') {
     document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
   }
 
-  
 
   useEffect(() => {
-    fetchData();
+    setIngredients(fetchData(date))
     changeBgColor()
   }, []); // Empty dependency array: run only once on mount
-
-  const fetchData = async () => {
-      try {
-          const response = [
-            {
-              'name': 'Pork',
-              'type': 'Dish A',
-              'img_link': 'https://www.lovefoodhatewaste.com/sites/default/files/styles/16_9_two_column/public/2022-08/Pork-sh1419942758.jpg.webp?itok=_Ow0IXe6'
-            },
-            {
-              'name': 'Eggplant',
-              'type': 'Dish B',
-              'img_link': 'https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/eggplant.jpg.webp?itok=k6_74IzB'
-            },
-            {
-              'name': 'Cabbage',
-              'type': 'Vegetables',
-              'img_link': 'https://greengarden.ph/cdn/shop/products/LINE_ALBUM_PICTURE_230412_85.jpg?v=1681290016'
-            },
-            {
-              'name': 'Rice',
-              'type': 'Starch',
-              'img_link': 'https://healthynibblesandbits.com/wp-content/uploads/2018/10/Jasmine-Rice-FF.jpg'
-            },
-            {
-              'name': 'Sponge cake',
-              'type': 'Dessert',
-              'img_link': 'https://www.laserbiscuit.com/wp-content/uploads/2021/03/sponge-cake-stuck.jpg'
-            }
-          ];
-          setIngredients(response);
-      } catch (error) {
-          console.error('Error fetching data:', error);
-      }
-  };
 
   const reset = () => {
     ingredientRefs.current.forEach(ref => {
@@ -125,30 +130,6 @@ function App(date = '12-03-2025') {
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
            : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue}/>}
-    </div>
-  );
-}*/
-
-
-function App() {
-  const [message, setMessage] = useState("Loading...");
-
-  useEffect(() => {
-    // If you set the "proxy" in package.json, use "/index"
-    // Otherwise, use the full URL: "http://127.0.0.1"
-    fetch("/index")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.text(); // Use .json() if your Flask returns jsonify()
-      })
-      .then((data) => setMessage(data))
-      .catch((err) => console.error("Fetch error:", err));
-  }, []);
-
-  return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Flask + React Connection</h1>
-      <p>Message from Backend: <strong>{message}</strong></p>
     </div>
   );
 }
