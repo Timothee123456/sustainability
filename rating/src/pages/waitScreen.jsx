@@ -8,7 +8,7 @@ export default function WaitScreen({setView, selectedIngredients, iconValue}) {
       const sendData = async () => {
         const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue
         try {
-          alert(data)
+          console.log(data)
         } catch (error) {
           console.error('Error sending data:', error);
         }

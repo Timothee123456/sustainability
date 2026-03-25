@@ -19,29 +19,29 @@ function fetchData(date) {
     
           const response = [
             {
-              'name': 'Pork',
+              'name': 'Chicken Basquaise',
               'type': 'Dish A',
-              'img_link': 'https://www.lovefoodhatewaste.com/sites/default/files/styles/16_9_two_column/public/2022-08/Pork-sh1419942758.jpg.webp?itok=_Ow0IXe6'
+              'img_link': 'https://www.foodandwine.com/thmb/7_y1SLSmabv8G3X6-bjZkNFfgOE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Poulet-Basquaise-FT-RECIPE1023-1e5c2fc9a9324247bb91968a096066e3.jpg'
             },
             {
-              'name': 'Eggplant',
+              'name': 'Cauliflowers & Peas Gratin',
               'type': 'Dish B',
-              'img_link': 'https://snaped.fns.usda.gov/sites/default/files/styles/crop_ratio_7_5/public/seasonal-produce/2018-05/eggplant.jpg.webp?itok=k6_74IzB'
+              'img_link': 'https://www.eatingbirdfood.com/wp-content/uploads/2020/02/Spicy-Cauliflower-Sheet-Pan-Dinner-4.jpg'
             },
             {
-              'name': 'Cabbage',
+              'name': 'Roasted Bell Peppers',
               'type': 'Vegetables',
-              'img_link': 'https://greengarden.ph/cdn/shop/products/LINE_ALBUM_PICTURE_230412_85.jpg?v=1681290016'
+              'img_link': 'https://healthyrecipesblogs.com/wp-content/uploads/2016/06/roasted-peppers-featured-2021.jpg'
             },
             {
-              'name': 'Rice',
+              'name': 'Couscous',
               'type': 'Starch',
-              'img_link': 'https://healthynibblesandbits.com/wp-content/uploads/2018/10/Jasmine-Rice-FF.jpg'
+              'img_link': 'https://i2.wp.com/lifemadesimplebakes.com/wp-content/uploads/2021/06/perfect-couscous-square-1200.jpg'
             },
             {
-              'name': 'Sponge cake',
+              'name': 'Apple/Strawberry Compote',
               'type': 'Dessert',
-              'img_link': 'https://www.laserbiscuit.com/wp-content/uploads/2021/03/sponge-cake-stuck.jpg'
+              'img_link': 'https://i.pinimg.com/736x/47/20/b4/4720b49593c3e600269d80b311669431.jpg'
             }
           ];
     return response
