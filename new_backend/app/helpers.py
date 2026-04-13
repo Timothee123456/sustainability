@@ -29,15 +29,18 @@ def find_date(date):
 def return_info(type, row_number, column_number):
     full_name = datasheet.cell(row_number, column_number).value
     cleaned_name = cleanedsheet.cell(row_number, column_number).value
+    if full_name is None:
+        return None
     location_name = imglinksheet.find(cleaned_name)
     if location_name:
         img_link = imglinksheet.cell(location_name.row, location_name.col + 1).value
     else:
         img_link = False
 
-    component_name = full_name if cleaned_name != "salad bar" else False if type == "Appetizer" else full_name
-    component_name = component_name.replace('\n', '')
-    component = { 
+    component_name =  full_name if cleaned_name != "salad bar" else False if type == "Appetizer" else full_name
+    if isinstance(component_name, str):
+        component_name = component_name.replace('\\n', '') if component_name is not bool else component_name
+    component = {
         'name': component_name,
         'type': type,
         'img_link': img_link
@@ -49,16 +52,18 @@ def return_info(type, row_number, column_number):
 
 def find_all_info(date):
     row_number = find_date(date)
-    
+
     if row_number:
-        appetizer = return_info("Appetizer", row_number, 2)
+        # appetizer = return_info("Appetizer", row_number, 2)
         dishA = return_info("Dish A", row_number, 3)
         dishB = return_info("Dish B", row_number, 4)
         vegetables = return_info("Vegetables", row_number, 5)
         starch = return_info("Starch", row_number, 6)
         dessert = return_info("Dessert", row_number, 8)
+        return_data = [dishA, dishB, vegetables, starch, dessert]
 
-        return_data = [appetizer, dishA, dishB, vegetables, starch, dessert]
+        if any(item is None for item in return_data):
+            return_data = False
     else:
         return_data = False
 

@@ -8,30 +8,21 @@ import ChooseMeal from './pages/chooseMeal.jsx';
 import ChooseIngredients from './pages/chooseIngredients.jsx';
 import ChooseIcon from './pages/chooseIcon.jsx';
 
-async function fetchData(date) {
-  console.log("fetchData called for:", `/api/date/${date}`);
-
-  try {
-    const res = await fetch(`/api/date/${date}`);
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}: Network response not ok`);
-    }
-
-    const data = await res.json();
-    if (data == false){
-        console.log("DATA ERROR")
-        return null
-    }
-    console.log("✅ SUCCESS DATA:", data);
-    return data;  // Returns actual data!
-
-  } catch (err) {
-    console.error("❌ Fetch error:", err);
-    alert("Fetch error: " + err.message);
-    return null;  // or throw err
-  }
+function fetchData(date) {
+  console.log("fetchData" + `/api/date/${date}`)
+  fetch(`/api/date/${date}`)
+    .then((res) => {
+      if (!res.ok) alert("Network response was not ok");
+      console.log("RETURN DATA:" + res.json())
+      return res.json();
+    })
+    .then((data) => {console.log("RETURNN DATA:" + data);return data})
+    .catch((err) => alert("Fetch error:" + err));
+  console.log("ERROR")
+  return "ERROR"
 }
+
+
 
 function App(date = '12-03-2026') {
   const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
@@ -93,16 +84,9 @@ function App(date = '12-03-2026') {
   const formattedDate = today.toLocaleDateString('en-GB');
   const formattedDateNew = formattedDate.replace(/\//g, '-');
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const data = await fetchData(formattedDateNew);
-        setIngredients(data);  // Now sets actual data!
-        console.log("✅ Ingredients set:", data);
-      } catch (err) {
-        console.error("❌ Failed to load data:", err);
-      }
-    };
-    loadData();
+    console.log("Call fetchdata" + formattedDateNew)
+    setIngredients(fetchData(formattedDateNew))
+    console.log("SET INREDIENTS" + ingredients)
     changeBgColor()
   }, []); // Empty dependency array: run only once on mount
 
