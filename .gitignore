@@ -1,4 +1,19 @@
-googlesheets/group2.json
+# Passwords
 new_backend/app/group2.json
+
+# venv + vscode
 .venv/
 .vscode/
+
+# Useless
+node_modules/
+__pycache__/
+*.pyc
+new_backend/static/static/js/
+new_backend/static/asset-manifest.json
+new_backend/static/index.html
+.env
+*.log
+.DS_Store
+build/
+dist/

@@ -38,6 +38,7 @@ function App(date = '12-03-2026') {
   const [ingredients, setIngredients] = useState([]);
   const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
   const [mealType, setMealType] = useState('A'); // 'A' or 'B'
+  const [messageNotification, setMessageNotification] = ""
   const [showNotification, setShowNotification] = useState(false);
   const [hideNotification, setHideNotification] = useState(false);
   const ingredientRefs = useRef([]); // Ref to store references to Ingredient components
@@ -144,7 +145,7 @@ function App(date = '12-03-2026') {
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
-           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue}/>}
+           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} />}
     </div>
   );
 }

@@ -1,21 +1,38 @@
 import { useState, useEffect } from 'react';
 import style from'../styling/waitScreen.module.css';
 
-export default function WaitScreen({setView, selectedIngredients, iconValue}) {
+export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage}) {
     const [count, setCount] = useState(3);
 
     useEffect(() => {
-      const sendData = async () => {
-        const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue
-        try {
-          alert(data)
-        } catch (error) {
-          console.error('Error sending data:', error);
-        }
-      };
+    const sendData = async () => {
+      const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue;
 
-      sendData(); // Call the sendData function when the component mounts
-    }, []);
+      try {
+        const response = await fetch("/api/store", {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+          body: data,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        const msg = result.success ? "Data sent successfully!" : "Failed to send data.";
+        setMessage(msg);
+        console.log(msg);
+      } catch (error) {
+        console.log("Error sending data:", error);
+        setMessage("Error sending data.");
+      }
+    };
+
+    sendData();
+  }, []);       
 
     useEffect(() => {
       if (count > 0) {
