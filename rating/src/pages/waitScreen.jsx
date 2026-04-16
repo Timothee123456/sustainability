@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import style from'../styling/waitScreen.module.css';
 
-export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage}) {
+export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage}) { //, startTime, elapsedTime
     const [count, setCount] = useState(3);
 
     useEffect(() => {
     const sendData = async () => {
-      const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue;
+      const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue; // const data = iconValue == null ? ({startTime, elapsedTime, selectedIngredients}) : {startTime, elapsedTime, iconValue}
 
       try {
         const response = await fetch("/api/store", {
