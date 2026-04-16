@@ -3,6 +3,7 @@ new_backend/app/group2.json
 
 # venv + vscode
 .venv/
+venv/
 .vscode/
 
 # Useless
