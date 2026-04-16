@@ -145,7 +145,7 @@ function App(date = '12-03-2026') {
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
-           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} />}
+           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} />} //add startTime={startTime} elapsedTime={elapsedTime} 
     </div>
   );
 }
