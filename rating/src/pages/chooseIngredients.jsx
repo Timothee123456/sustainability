@@ -18,12 +18,10 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
       let hasNull = false;
       let hasTrue = false;
       for (const value of Object.values(selectedIngredientsLocal)) {
-        console.log(value)
         if (value == null) {
           hasNull = true
         }
         if (value != false){
-          console.log("REUY")
           hasTrue = true;
         }
       }
