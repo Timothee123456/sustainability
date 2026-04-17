@@ -1,14 +1,37 @@
 import json
 import os
+import sys
 
 import gspread
 from google.oauth2.service_account import Credentials
 
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
 
+# Use env var if set, otherwise use the hardcoded path
 base_path = os.path.dirname(os.path.abspath(__file__))
-config_path = os.path.join(base_path, 'group2.json')
-creds = Credentials.from_service_account_file(config_path, scopes=scopes)
+config_path = os.path.join(base_path, "group2.json")
+
+json_str = os.getenv("GOOGLE_CREDENTIALS_JSON")
+
+if json_str:
+    # Load from env (JSON string)
+    try:
+        creds = Credentials.from_service_account_info(json.loads(json_str), scopes=scopes)
+    except Exception as e:
+        print("ERROR: Failed to load Google credentials from GOOGLE_CREDENTIALS_JSON:", e)
+        sys.exit(1)
+else:
+    # Load from file
+    try:
+        creds = Credentials.from_service_account_file(config_path, scopes=scopes)
+    except FileNotFoundError:
+        print("ERROR: Google service account file not found at:", config_path)
+        print("Please place the JSON file there and restart the server.")
+        sys.exit(1)
+    except Exception as e:
+        print("ERROR: Failed to load Google credentials from file:", e)
+        sys.exit(1)
+
 client = gspread.authorize(creds)
 
 sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1VlOpnuUkrDvq0LD0SgQGq1X9IPv0E8xh-Oq8lrXaQ_I/')
