@@ -1,7 +1,8 @@
-import RadioGroupRating from "../components/old_rating/rating.tsx";
 import React, { useState, useRef } from "react";
+import RadioGroupRating from "../components/old_rating/rating.tsx";
+import BackButton from '../components/BackButton.jsx';
 
-export default function ChooseIcon({reset, setView, rsize, setIconValue}) {
+export default function ChooseIcon({reset, setView, rsize, setIconValue, setNbBackPressed}) {
     const [value, setValue] = React.useState(null);
     const [showNotification, setShowNotification] = useState(false);
     const [hideNotification, setHideNotification] = useState(false);
@@ -33,7 +34,12 @@ export default function ChooseIcon({reset, setView, rsize, setIconValue}) {
                 Please select an option before submitting
                 </div>
             )}
-            <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('meal');}}>&#8592; Back</button>
+            <BackButton 
+                onClick={(e) => {
+                    setView('meal');
+                }}
+                setNbBackPressed={setNbBackPressed}
+            />
             <h1 style={{marginBottom: rsize * 25 + "px"}}>How was your meal?</h1>
             <RadioGroupRating size={rsize} onChange={(value) => setValue(value)}/>
             <button className="submit" onClick={submit}>

@@ -52,6 +52,8 @@ function App() {
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(null);
   const [inBetweenTime, setInBetweenTime] = useState(null);
+  const [clickCount, setClickCount] = useState(0);
+  const [nbBackPressed, setNbBackPressed] = useState(0);
 
   useEffect(() => {
     const ratingSize = () => {
@@ -79,6 +81,8 @@ function App() {
       setSelectedIngredients({});
       setIconValue(null);
       setInBetweenTime(Date.now());
+      setClickCount(0);
+      setNbBackPressed(0);
     } else if (view === 'meal' && startTime === null) {
       // Start timestamp when entering 'meal' view
       setStartTime(Date.now());
@@ -110,6 +114,21 @@ function App() {
     loadData();
     changeBgColor()
   }, []); // Empty dependency array: run only once on mount
+
+  // Count clicks globally to measure engagement
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      setClickCount(prev => prev + 1);
+    };
+
+    // Listen to ALL clicks on the page
+    document.addEventListener("click", handleGlobalClick, true);
+
+    // Cleanup: remove the listener when App unmounts
+    return () => {
+      document.removeEventListener("click", handleGlobalClick, true);
+    };
+  }, []);
 
   const reset = () => {
     ingredientRefs.current.forEach(ref => {
@@ -146,10 +165,10 @@ function App() {
         </div>
       )}
       {view === 'screensaver' ? <Screensaver setView={setView} /> 
-        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} />
-         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
-          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
-           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} startTime={startTime} elapsedTime={elapsedTime} inBetweenTime={inBetweenTime} />} 
+        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} setNbBackPressed={setNbBackPressed} />
+         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} setNbBackPressed={setNbBackPressed} />
+          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} setNbBackPressed={setNbBackPressed} />
+           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} startTime={startTime} elapsedTime={elapsedTime} inBetweenTime={inBetweenTime} clickCount={clickCount}nbBackPressed={nbBackPressed} />} 
     </div>
   );
 }

@@ -1,9 +1,15 @@
 import Meal from '../components/meal.jsx';
+import BackButton from '../components/BackButton.jsx';
 
-export default function ChooseMeal({ingredients, setView, setMealType, allowedMeals}) {
+export default function ChooseMeal({ingredients, setView, setMealType, allowedMeals, setNbBackPressed}) {
     return (
       <div className="container">
-        <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('screensaver');}}>&#8592; Back</button>
+        <BackButton 
+          onClick={(e) => {
+            setView('screensaver');
+          }}
+          setNbBackPressed={setNbBackPressed}
+        />
         <h1>Help improve the cantine</h1>
         <p>Choose which meal you chose today</p>
         <div className="food-grid">

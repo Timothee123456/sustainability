@@ -57,6 +57,11 @@ git push
 ```
 
 # Run it on codespaces  
+### Export Environment Variables:
+```
+export GOOGLE_SHEET_URL='https://docs.google.com/spreadsheets/d/1-5h2GsF-AlAyR4VKqpdbniMfvNfpbNHF55FyRfRwZm4/'
+```
+
 ### RUN WEBSITE:  
 ```
 cd /workspaces/sustainability/new_backend

@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import Ingredient from '../components/ingredient.jsx';
+import BackButton from '../components/BackButton.jsx';
 
-export default function ChooseIngredients({ingredients, mealType, ingredientRefs, reset, setView, setSelectedIngredients}) {
+export default function ChooseIngredients({ingredients, mealType, ingredientRefs, reset, setView, setSelectedIngredients, setNbBackPressed}) {
     const [showNotification, setShowNotification] = useState(false);
     const [hideNotification, setHideNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState("Please select an option for each selected ingredient before submitting");
@@ -60,7 +61,12 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
             {notificationMessage}
             </div>
         )}
-        <button className="back-button" onClick={(e) => {e.stopPropagation(); setView('meal');}}>&#8592; Back</button>
+        <BackButton 
+          onClick={(e) => {
+            setView('meal');
+          }}
+          setNbBackPressed={setNbBackPressed}
+        />
         <h1>What did you like today?</h1>
         <p>Rate your food by clicking the icons below</p>
         <div className="food-grid">

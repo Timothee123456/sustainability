@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import style from'../styling/waitScreen.module.css';
 
-export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage, startTime, elapsedTime, inBetweenTime}) { 
+export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage, startTime, elapsedTime, inBetweenTime, clickCount, nbBackPressed}) { 
     const [count, setCount] = useState(3);
 
     useEffect(() => {
@@ -10,6 +10,8 @@ export default function WaitScreen({setView, selectedIngredients, iconValue, set
         startTime: startTime, 
         elapsedTime: elapsedTime, 
         inBetweenTime: inBetweenTime,
+        nbBackPressed: nbBackPressed,
+        clickCount: clickCount,
       }
       const food_data = { 
         selectedIngredients: selectedIngredients, 
