@@ -96,7 +96,12 @@ def find_all_info(date):
 
 #######################################################################
 
-store_sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/18PKyGEufH3nxx-YLQ1vNPgIE7TX8EQAl20VobDY6_KQ/')
+store_sheet_url = os.getenv('GOOGLE_SHEET_URL')
+if store_sheet_url:
+    store_sheet = client.open_by_url(store_sheet_url)
+else:
+    # Fallback to production sheet
+    store_sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/18PKyGEufH3nxx-YLQ1vNPgIE7TX8EQAl20VobDY6_KQ/')
 store_datasheet = store_sheet.worksheet("Data")
 def store_data(data):
     # Assumes data is a string or simple value to store in first column (A)

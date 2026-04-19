@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import style from'../styling/waitScreen.module.css';
 
-export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage}) { //, startTime, elapsedTime
+export default function WaitScreen({setView, selectedIngredients, iconValue, setMessage, startTime, elapsedTime, inBetweenTime}) { 
     const [count, setCount] = useState(3);
 
     useEffect(() => {
     const sendData = async () => {
-      const data = iconValue == null ? JSON.stringify(selectedIngredients) : iconValue; // const data = iconValue == null ? ({startTime, elapsedTime, selectedIngredients}) : {startTime, elapsedTime, iconValue}
+      const additional_info = {
+        startTime: startTime, 
+        elapsedTime: elapsedTime, 
+        inBetweenTime: inBetweenTime,
+      }
+      const food_data = { 
+        selectedIngredients: selectedIngredients, 
+        iconValue: iconValue
+      }
+      const full_data = JSON.stringify({ ...additional_info, ...food_data })
 
       try {
         const response = await fetch("/api/store", {
@@ -14,7 +23,7 @@ export default function WaitScreen({setView, selectedIngredients, iconValue, set
           headers: {
             "Content-Type": "text/plain",
           },
-          body: data,
+          body: full_data,
         });
 
         if (!response.ok) {

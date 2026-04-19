@@ -9,7 +9,7 @@ const Ingredient = ({ name, type, img_link, onChange }) => {
     const goldRef = useRef(null);
 
     useEffect(() => {
-        onChange(name, color, isRemoved);
+        onChange(type, color, isRemoved);
     }, [isRemoved]);
 
     function changeRating(e, new_color) {
@@ -22,9 +22,9 @@ const Ingredient = ({ name, type, img_link, onChange }) => {
             // Add .selected to the clicked span
             const refMap = { green: greenRef, red: redRef, gold: goldRef };
             refMap[new_color].current?.classList.add('selected');
-            onChange(name, new_color, isRemoved); // Notify parent of color change
+            onChange(type, new_color, isRemoved); // Notify parent of color change
         } else {
-            onChange(name, null, isRemoved); // Notify parent of color change
+            onChange(type, null, isRemoved); // Notify parent of color change
         }
     }
 

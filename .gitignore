@@ -17,3 +17,7 @@ new_backend/static/*
 .DS_Store
 build/
 dist/
+
+# Shell scripts
+build
+run

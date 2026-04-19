@@ -33,7 +33,8 @@ async function fetchData(date) {
   }
 }
 
-function App(date = '12-03-2026') {
+function App() {
+  const urlParams = new URLSearchParams(window.location.search);
   const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
   const [ingredients, setIngredients] = useState([]);
   const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
@@ -50,14 +51,13 @@ function App(date = '12-03-2026') {
 
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(null);
+  const [inBetweenTime, setInBetweenTime] = useState(null);
 
   useEffect(() => {
     const ratingSize = () => {
         setRsize(window.innerWidth / baseWidth);
     };
     window.addEventListener('resize', ratingSize);  // this will adjust the rating size based on window resize
-
-    const urlParams = new URLSearchParams(window.location.search);
     const userParameter = urlParams.get('user'); // Get the 'mode' parameter from the URL
 
     if (userParameter) {
@@ -78,10 +78,12 @@ function App(date = '12-03-2026') {
       setElapsedTime(null);
       setSelectedIngredients({});
       setIconValue(null);
+      setInBetweenTime(Date.now());
     } else if (view === 'meal' && startTime === null) {
       // Start timestamp when entering 'meal' view
       setStartTime(Date.now());
       setElapsedTime(null);
+      setInBetweenTime(Math.round((Date.now() - inBetweenTime)));
     }
   }, [view]);
 
@@ -89,15 +91,17 @@ function App(date = '12-03-2026') {
   function changeBgColor(){
     document.body.style.backgroundColor = getRandomBrightColor() // Change background color to a random bright color
   }
+  
+  const dateParameter = urlParams.get('date');
+  const date = dateParameter
+    ? dateParameter
+    : new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
 
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-GB');
-  const formattedDateNew = formattedDate.replace(/\//g, '-');
   useEffect(() => {
     const loadData = async () => {
       try {
-        const data = await fetchData(formattedDateNew);
-        setIngredients(data);  // Now sets actual data!
+        const data = await fetchData(date);
+        setIngredients(data); 
         console.log("✅ Ingredients set:", data);
       } catch (err) {
         console.error("❌ Failed to load data:", err);
@@ -145,7 +149,7 @@ function App(date = '12-03-2026') {
         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} />
          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} />
           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} />
-           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} />} //add startTime={startTime} elapsedTime={elapsedTime} 
+           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} startTime={startTime} elapsedTime={elapsedTime} inBetweenTime={inBetweenTime} />} 
     </div>
   );
 }

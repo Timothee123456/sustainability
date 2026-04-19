@@ -9,7 +9,7 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
     const [selectedIngredientsLocal, setSelectedIngredientsLocal] = useState(() => {
       const initialState = {};
       ingredients.forEach(ingredient => {
-        initialState[ingredient.name] = false; // Initialize all ingredients to false (not selected)
+        initialState[ingredient.type] = false; // Initialize all ingredients to false (not selected)
       });
       return initialState;
     });
@@ -46,10 +46,10 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
       reset()
     }
 
-    const handleIngredientChange = (name, color, isRemoved) => {
+    const handleIngredientChange = (type, color, isRemoved) => {
       setSelectedIngredientsLocal(prevIngredients => ({
         ...prevIngredients,
-        [name]: isRemoved ? false : color,
+        [type]: isRemoved ? false : color,
       }));
     };
 
