@@ -12,6 +12,7 @@ export default function WaitScreen({setView, selectedIngredients, iconValue, set
         inBetweenTime: inBetweenTime,
         nbBackPressed: nbBackPressed,
         clickCount: clickCount,
+        deviceId: localStorage.getItem('deviceId') || 'unknown_device',
       }
       const food_data = { 
         selectedIngredients: selectedIngredients, 

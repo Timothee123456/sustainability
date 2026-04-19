@@ -2,6 +2,7 @@ import './App.css';
 import './styling/ratingDiv.css';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import getRandomBrightColor from './utils/randomColor.js';
+import DeviceID from './pages/deviceID.jsx';
 import WaitScreen from './pages/waitScreen.jsx';
 import Screensaver from './pages/screensaver.jsx';
 import ChooseMeal from './pages/chooseMeal.jsx';
@@ -37,7 +38,7 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
   const [ingredients, setIngredients] = useState([]);
-  const [view, setView] = useState('screensaver'); // 'screensaver', 'meal', 'ingredients'
+  const [view, setView] = useState(localStorage.getItem('deviceId') ? 'screensaver' : 'deviceID');
   const [mealType, setMealType] = useState('A'); // 'A' or 'B'
   const [messageNotification, setMessageNotification] = ""
   const [showNotification, setShowNotification] = useState(false);
@@ -118,7 +119,9 @@ function App() {
   // Count clicks globally to measure engagement
   useEffect(() => {
     const handleGlobalClick = () => {
-      setClickCount(prev => prev + 1);
+      setTimeout(() => {
+        setClickCount(prev => prev + 1);
+      }, 0);
     };
 
     // Listen to ALL clicks on the page
@@ -164,11 +167,12 @@ function App() {
           Your response was recorded
         </div>
       )}
-      {view === 'screensaver' ? <Screensaver setView={setView} /> 
-        : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} setNbBackPressed={setNbBackPressed} />
-         : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} setNbBackPressed={setNbBackPressed} />
-          : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} setNbBackPressed={setNbBackPressed} />
-           : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} startTime={startTime} elapsedTime={elapsedTime} inBetweenTime={inBetweenTime} clickCount={clickCount}nbBackPressed={nbBackPressed} />} 
+      { view === 'deviceID' ? <DeviceID setView={setView} />
+        : view === 'screensaver' ? <Screensaver setView={setView} /> 
+         : view === 'meal' ? <ChooseMeal ingredients={ingredients} setView={setView} setMealType={setMealType} allowedMeals={allowedMeals} setNbBackPressed={setNbBackPressed} />
+          : view === 'ingredients' ? <ChooseIngredients ingredients={ingredients} mealType={mealType} ingredientRefs={ingredientRefs} reset={reset} setView={setView} setSelectedIngredients={setSelectedIngredients} setNbBackPressed={setNbBackPressed} />
+           : view === 'chooseIcon' ? <ChooseIcon reset={reset} setView={setView} rsize={rsize} setIconValue={setIconValue} setNbBackPressed={setNbBackPressed} />
+            : <WaitScreen setView={setView} selectedIngredients={selectedIngredients} iconValue={iconValue} setMessage={setMessageNotification} startTime={startTime} elapsedTime={elapsedTime} inBetweenTime={inBetweenTime} clickCount={clickCount}nbBackPressed={nbBackPressed} />}
     </div>
   );
 }

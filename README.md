@@ -57,15 +57,12 @@ git push
 ```
 
 # Run it on codespaces  
-### Export Environment Variables:
-```
-export GOOGLE_SHEET_URL='https://docs.google.com/spreadsheets/d/1-5h2GsF-AlAyR4VKqpdbniMfvNfpbNHF55FyRfRwZm4/'
-```
 
 ### RUN WEBSITE:  
 ```
 cd /workspaces/sustainability/new_backend
 source venv/bin/activate
+export GOOGLE_SHEET_URL='https://docs.google.com/spreadsheets/d/1-5h2GsF-AlAyR4VKqpdbniMfvNfpbNHF55FyRfRwZm4/'
 gunicorn -w 4 -b 0.0.0.0:8001 "run:app"
 ```
 or  
