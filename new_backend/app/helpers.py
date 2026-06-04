@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+from flask import abort
 
 import gspread
 from google.oauth2.service_account import Credentials
@@ -47,13 +48,13 @@ def find_date(date):
     if cell:
         return cell.row
     else:
-        return None
+        abort(404, description=f"The date {date} cell doesn't exist")
 
 def return_info(type, row_number, column_number):
     full_name = datasheet.cell(row_number, column_number).value
     cleaned_name = cleanedsheet.cell(row_number, column_number).value
     if full_name is None:
-        return None
+        abort(404, description=f"Full name on row {row_number} and column {column_number} of Data sheet is None")
     location_name = imglinksheet.find(cleaned_name)
     if location_name:
         img_link = imglinksheet.cell(location_name.row, location_name.col + 1).value
@@ -86,9 +87,9 @@ def find_all_info(date):
         return_data = [dishA, dishB, vegetables, starch, dessert]
 
         if any(item is None for item in return_data):
-            return_data = False
+            abort(404, description=f"An item is missing. Data info : [{return_data.join(', ')}]")
     else:
-        return_data = False
+        abort(404, description=f"No information found for the date {date}")
 
 
     return json.dumps(return_data, indent=4)

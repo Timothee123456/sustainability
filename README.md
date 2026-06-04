@@ -80,5 +80,5 @@ cp -r rating/build/* new_backend/static/
 ```
 or  
 ```
-./build_react
+./build
 ```

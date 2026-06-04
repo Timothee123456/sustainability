@@ -16,14 +16,13 @@ async function fetchData(date) {
     const res = await fetch(`/api/date/${date}`);
 
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status}: Network response not ok`);
+      // Best Practice: Try to read the error message sent by your Flask JSON server
+      const errorData = await res.json().catch(() => ({})); 
+      const serverMessage = errorData.message || `HTTP ${res.status}`;
+      throw new Error(serverMessage);
     }
 
     const data = await res.json();
-    if (data == false){
-        console.log("DATA ERROR")
-        return null
-    }
     console.log("✅ SUCCESS DATA:", data);
     return data;  // Returns actual data!
 
