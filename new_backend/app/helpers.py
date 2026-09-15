@@ -81,10 +81,10 @@ def find_all_info(date):
         # appetizer = return_info("Appetizer", row_number, 2)
         dishA = return_info("Dish A", row_number, 3)
         dishB = return_info("Dish B", row_number, 4)
-        vegetables = return_info("Vegetables", row_number, 5)
+        dishC = return_info("Dish C", row_number, 5)
         starch = return_info("Starch", row_number, 6)
         dessert = return_info("Dessert", row_number, 8)
-        return_data = [dishA, dishB, vegetables, starch, dessert]
+        return_data = [dishA, dishB, dishC, starch, dessert]
 
         if any(item is None for item in return_data):
             abort(404, description=f"An item is missing. Data info : [{return_data.join(', ')}]")

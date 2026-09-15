@@ -51,10 +51,22 @@ export default function ChooseMeal({ingredients, setView, setMealType, allowedMe
           )}
           {allowedMeals.includes('C') && (
             <Meal
-              name={'Noodles Hut'}
-              img_link={"./noodles_hut.jpg"}
-              meal={'Meal C'}
+              name={ingredients[2].name}
+              img_link={ingredients[2].img_link}
+              meal={'Asian Section'}
               color={'60, 179, 113'}
+              onClick={() => {
+                  setView('ingredients');
+                  setMealType('C');
+              }}
+            />
+          )}
+          {allowedMeals.includes('C') && (
+            <Meal
+              name={''}
+              img_link={"./noodles_hut.jpg"}
+              meal={'Noodles Hut'}
+              color={'147, 112, 219'}
               onClick={() => {
                   setView('chooseIcon');
               }}

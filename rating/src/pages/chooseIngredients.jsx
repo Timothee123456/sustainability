@@ -71,7 +71,9 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
         <p>Rate your food by clicking the icons below</p>
         <div className="food-grid">
             {ingredients.map((ingredient, index) => {
-            if ((mealType === 'A' && ingredient.type === 'Dish B') || (mealType === 'B' && ingredient.type === 'Dish A')) {
+            if ((mealType === 'A' && (ingredient.type === 'Dish B' || ingredient.type === 'Dish C')) 
+              || (mealType === 'B' && (ingredient.type === 'Dish A' || ingredient.type === 'Dish C'))
+              || (mealType === 'C' && (ingredient.type === 'Dish A' || ingredient.type === 'Dish B'))) {
               return null;
             }
             return (
