@@ -18,7 +18,9 @@ async function fetchData(date) {
     if (!res.ok) {
       // Best Practice: Try to read the error message sent by your Flask JSON server
       const errorData = await res.json().catch(() => ({})); 
-      const serverMessage = errorData.message || `HTTP ${res.status}`;
+      const serverMessage = res.status === 404
+        ? `No meal data was found for ${date}.`
+        : errorData.message || `HTTP ${res.status}`;
       throw new Error(serverMessage);
     }
 
@@ -28,8 +30,7 @@ async function fetchData(date) {
 
   } catch (err) {
     console.error("❌ Fetch error:", err);
-    alert("Fetch error: " + err.message);
-    return null;  // or throw err
+    throw err;
   }
 }
 
@@ -37,6 +38,7 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const [allowedMeals, setAllowedMeals] = useState(["A", "B", "C"]); // list of total available meals: ["A", "B", "AB" "C"]
   const [ingredients, setIngredients] = useState([]);
+  const [loadError, setLoadError] = useState(null);
   const [view, setView] = useState(localStorage.getItem('deviceId') ? 'screensaver' : 'deviceID');
   const [mealType, setMealType] = useState('A'); // 'A' or 'B'
   const [messageNotification, setMessageNotification] = ""
@@ -109,6 +111,7 @@ function App() {
         console.log("✅ Ingredients set:", data);
       } catch (err) {
         console.error("❌ Failed to load data:", err);
+        setLoadError(err.message);
       }
     };
     loadData();
@@ -149,6 +152,18 @@ function App() {
       changeBgColor();
       setTimeout(() => setShowNotification(false), 500); // Wait for slideUp animation to complete
     }, 3000); // Hide notification after 3 seconds
+  }
+
+  if (loadError) {
+    return (
+      <div className="App">
+        <div className="container">
+          <h1>Unable to load today&apos;s meals</h1>
+          <p>{loadError}</p>
+          <p>Please check the meal data and try again.</p>
+        </div>
+      </div>
+    );
   }
 
   if (ingredients.length === 0) {
