@@ -6,6 +6,11 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
     const [showNotification, setShowNotification] = useState(false);
     const [hideNotification, setHideNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState("Please select an option for each selected ingredient before submitting");
+    
+    // Comment state hooks
+    const [showCommentBox, setShowCommentBox] = useState(false);
+    const [comment, setComment] = useState('');
+
     const timeoutRef = useRef(null);
     const [selectedIngredientsLocal, setSelectedIngredientsLocal] = useState(() => {
       const initialState = {};
@@ -43,8 +48,13 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
         }, 2000);
         return;
       }
-      setSelectedIngredients(selectedIngredientsLocal);
-      reset()
+      
+      // Pass the selected ingredients along with the comment if needed
+      setSelectedIngredients({
+        ...selectedIngredientsLocal,
+        comment: comment 
+      });
+      reset();
     }
 
     const handleIngredientChange = (type, color, isRemoved) => {
@@ -87,9 +97,31 @@ export default function ChooseIngredients({ingredients, mealType, ingredientRefs
             );
           })}
         </div>
+
+        {/* Comment toggle button */}
+        <button 
+          className="comment-toggle-btn" 
+          onClick={() => setShowCommentBox(prev => !prev)}
+        >
+          {showCommentBox ? 'Cancel' : 'Add a comment ?'}
+        </button>
+
+        {/* Conditional comment textarea */}
+        {showCommentBox && (
+          <div className="comment-container">
+            <textarea
+              className="comment-input"
+              rows="4"
+              placeholder="Type your comment here..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
+        )}
+
         <button className="submit" onClick={submit}>
           Submit
         </button>
       </div>
-    )
-  };
+    );
+};
