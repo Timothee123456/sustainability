@@ -57,6 +57,20 @@ function App() {
   const [clickCount, setClickCount] = useState(0);
   const [nbBackPressed, setNbBackPressed] = useState(0);
 
+  // Reload the page at 1:00 AM every day
+  useEffect(() => {
+    // Check every minute if it is 1:00 AM
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (now.getHours() === 1 && now.getMinutes() === 0) {
+        window.location.reload();
+      }
+    }, 60000); // 60000 ms = 1 minute
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const ratingSize = () => {
         setRsize(window.innerWidth / baseWidth);
